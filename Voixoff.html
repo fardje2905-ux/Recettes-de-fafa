@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les recettes de Fafa — Studio complet</title>
+<style>
+:root{--vert:#143d28;--or:#c8963e;--doux:#6b6256;--fond:#faf8f3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:#1f1a15;font-family:-apple-system,system-ui,sans-serif;line-height:1.55;padding-bottom:40px}
+.serif{font-family:Georgia,serif}
+header{padding:18px 16px 8px;max-width:560px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:12px}
+.pot{font-size:2rem}
+.nom{color:var(--vert);font-size:1.3rem;font-weight:700}
+.souligne{width:50px;height:2px;background:var(--or);margin-top:6px}
+details#settings{background:#fff;border:1px solid #e8e2d6;border-radius:12px;padding:12px 14px;margin-top:14px}
+details#settings summary{cursor:pointer;font-weight:600;color:var(--vert)}
+details#settings>div{padding-top:12px}
+label{display:block;font-size:.82rem;color:var(--doux);margin-top:8px;font-weight:600}
+input,textarea,select{width:100%;padding:11px;border-radius:10px;border:1px solid #e0dbd0;background:#fff;font-size:1rem;margin-top:4px;font-family:inherit}
+.row{margin-top:10px}
+button{background:var(--vert);color:#fff;border:0;padding:14px;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:opacity .2s}
+button:hover{opacity:.9}
+button.sec{background:#fff;color:var(--vert);border:2px solid var(--vert)}
+button.or{background:var(--or);color:#fff}
+button:disabled{opacity:.4;cursor:not-allowed}
+.muted{color:var(--doux);font-size:.88rem}
+#status .status{margin-top:12px;padding:12px;border-radius:10px;background:#fff;border-left:4px solid var(--or);font-size:.92rem}
+#status .ok{border-color:#16a34a;background:#f0fdf4}
+#status .err{border-color:#991b1b;background:#fef2f2}
+#status .warn{border-color:#f59e0b;background:#fffbeb}
+#suggestions{display:flex;flex-wrap:wrap;gap:8px}
+.suggestion{background:#fff;border:1px solid #e0dbd0;color:var(--vert);padding:8px 12px;border-radius:20px;font-size:.85rem;font-weight:600;width:auto}
+main{max-width:560px;margin:0 auto;padding:0 16px}
+.hidden{display:none !important}
+.card{background:#fff;border:1px solid #e8e2d6;border-radius:14px;padding:18px;margin-top:14px}
+.card h3{color:var(--vert);font-family:Georgia,serif;margin:0 0 12px;font-size:1.2rem}
+.video-card{padding:12px;border:1px solid #e8e2d6;border-radius:10px;margin-top:8px;cursor:pointer;transition:background .2s}
+.video-card:hover{background:#faf8f3}
+.video-card h4{margin:0 0 4px;font-size:.95rem;color:var(--vert)}
+.video-card .meta{font-size:.78rem;color:var(--doux)}
+.video-card .vues{display:inline-block;margin-top:6px;font-size:.75rem;background:#f0ebe0;padding:3px 8px;border-radius:10px}
+.cover{background:#fff;border-radius:16px;overflow:hidden;border:1px solid #e8e2d6;text-align:center;margin-top:14px}
+.cover .haut{padding:24px 18px 12px}
+.marque{color:var(--vert);font-family:Georgia,serif;font-size:.95rem;font-weight:600}
+.filet{width:60px;height:2px;background:var(--or);margin:12px auto 16px}
+.cover h1{color:var(--vert);font-family:Georgia,serif;font-size:2rem;margin:8px 0;text-transform:uppercase}
+.cover h2{color:var(--vert);font-family:Georgia,serif;font-size:1.35rem;margin:0 0 16px;font-weight:500}
+.cover .photo{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:#f0ebe0}
+.cover .pied{padding:16px;color:var(--vert);font-family:Georgia,serif;font-size:1.15rem;font-weight:600;border-top:1px solid #e8e2d6}
+.cover .meta{padding:0 16px 18px;font-size:.85rem;color:var(--doux)}
+.ing{list-style:none;padding:0;margin:0}
+.ing li{padding:11px 0;border-bottom:1px dashed #e8e2d6}
+.ing b{color:var(--vert);display:block;font-size:.85rem;text-transform:uppercase;letter-spacing:.3px}
+.steps{list-style:none;padding:0;margin:0}
+.steps li{margin:16px 0}
+.steps li b{color:var(--vert);display:block;font-family:Georgia,serif;font-size:1.08rem;margin-bottom:4px}
+.steps p{margin:0;color:#3a352c}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.scene{background:#fff;border:1px solid #e8e2d6;border-radius:10px;padding:10px}
+.scene .titre{font-size:.78rem;font-weight:700;color:var(--vert);margin-bottom:6px}
+.scene .caption{font-size:.78rem;color:var(--doux);margin-top:6px;min-height:2.2em}
+.scene button{width:100%;padding:8px;font-size:.82rem}
+.actions-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.info-photo{margin-top:10px;padding:10px;background:#fffbeb;border-radius:8px;font-size:.88rem;text-align:center}
+.provider{font-size:.7rem;padding:2px 7px;border-radius:8px;margin-left:6px;font-weight:700}
+.provider.agnes{background:#e0f2fe;color:#0369a1}
+.provider.mistral{background:#fef3c7;color:#92400e}
+.help-box{background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:12px;margin-bottom:12px;font-size:.88rem}
+.help-box h4{margin:0 0 8px;color:var(--vert);font-size:.95rem}
+.help-box ol{margin:0;padding-left:18px}
+.help-box li{margin:3px 0}
+.script-view{background:#fff;border:1px solid #e8e2d6;border-radius:10px;padding:16px;font-family:'SF Mono',Monaco,monospace;font-size:.82rem;white-space:pre-wrap;max-height:60vh;overflow:auto;line-height:1.5}
+.copy-btn,.copy-chatgpt{width:100%;margin-top:6px;padding:14px;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;border:0}
+.copy-btn{background:var(--vert);color:#fff}
+.copy-chatgpt{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff}
+.copy-btn.ok,.copy-chatgpt.ok{background:#16a34a !important}
+
+/* ==== NOUVEAU : PANNEAU VOIX OFF INTÉGRÉ ==== */
+.voice-panel{background:#fff;border:1px solid #e8e2d6;border-radius:12px;padding:14px;margin-top:12px}
+.voice-panel h4{margin:0 0 10px;color:var(--vert);font-family:Georgia,serif;font-size:1.05rem}
+.voice-controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.voice-controls label{margin-top:0}
+.voice-btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.voice-btn-row button{padding:12px;font-size:.92rem}
+.play-all-btn{background:linear-gradient(135deg,#e11d48,#f43f5e);color:#fff;width:100%;padding:14px;border:0;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;margin-top:10px}
+.play-all-btn:disabled{opacity:.5}
+.scene-voice-btn{background:#fff;color:var(--vert);border:2px solid var(--vert);padding:6px 10px;border-radius:8px;font-size:.75rem;font-weight:700;cursor:pointer;width:100%;margin-top:4px}
+.scene-voice-btn:hover{background:var(--vert);color:#fff}
+.scene-voice-btn.playing{background:var(--or);color:#fff;border-color:var(--or)}
+.progress-voice{margin-top:10px;padding:8px;background:#f0fdf4;border-radius:8px;font-size:.82rem;text-align:center;color:var(--vert);font-weight:600;display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="pot">🍲</div>
+    <div>
+      <div class="nom serif">Les recettes de Fafa</div>
+      <div class="souligne"></div>
+    </div>
+  </div>
+  <details id="settings">
+    <summary>⚙️ Mes clés API</summary>
+    <div>
+      <label>Clé Agnès (gratuit — recommandé)</label>
+      <input id="kAgnes" type="password" placeholder="colle ta clé Agnès">
+      <label>Clé Mistral (secours, payant)</label>
+      <input id="kMistral" type="password" placeholder="colle ta clé Mistral">
+      <label>Clé YouTube (recherche vidéos)</label>
+      <input id="kYoutube" type="password" placeholder="AIza...">
+      <button id="saveKeys" style="margin-top:14px;width:100%">💾 Enregistrer</button>
+      <p class="muted" style="margin-top:10px">⚠️ Les clés restent dans ce navigateur.</p>
+    </div>
+  </details>
+  <div class="row">
+    <input id="q" placeholder="ex : bœuf bourguignon, risotto..." value="">
+  </div>
+  <div class="row">
+    <button id="searchYt" style="width:100%">📺 Top vues YouTube</button>
+  </div>
+  <div class="row" style="margin-top:8px">
+    <button id="searchDirect" class="sec" style="width:100%">✨ Créer directement une recette</button>
+  </div>
+  <div id="status"></div>
+  <div id="resetZone" style="margin-top:8px;display:none">
+    <button id="nouvelleRecette" class="sec" style="width:100%;color:#991b1b;border-color:#991b1b">🗑️ Effacer et recommencer</button>
+  </div>
+  <div style="margin-top:14px">
+    <div class="muted" style="margin-bottom:8px;font-weight:600">💡 Idées populaires (touche pour lancer) :</div>
+    <div id="suggestions"></div>
+  </div>
+</header>
+
+<main>
+  <section id="results" class="hidden">
+    <div class="card">
+      <h3 class="serif">Vidéos YouTube les plus vues</h3>
+      <p class="muted">Touche une vidéo pour créer une recette inspirée.</p>
+      <div id="resultsList"></div>
+    </div>
+  </section>
+
+  <section id="recipe" class="hidden">
+    <div class="cover">
+      <div class="haut">
+        <div class="marque"><span class="pot">🍲</span> Les recettes de Fafa</div>
+        <div class="filet"></div>
+        <h1 id="rTitle" class="serif"></h1>
+        <h2 id="rSub" class="serif"></h2>
+      </div>
+      <img id="rCover" class="photo" alt="">
+      <div class="pied serif">La recette étape par étape</div>
+      <div class="meta" id="rMeta"></div>
+    </div>
+
+    <div class="card">
+      <h3 class="serif">Ingrédients</h3>
+      <ul id="rIng" class="ing"></ul>
+    </div>
+
+    <div class="card">
+      <h3 class="serif">Préparation</h3>
+      <ul id="rSteps" class="steps"></ul>
+    </div>
+
+    <div class="card">
+      <h3 class="serif">Storyboard vidéo (15 scènes ≈ 60 s) <span id="provBadge"></span></h3>
+      <div class="row">
+        <button id="genAll" style="width:100%">🎨 Générer toutes les photos</button>
+      </div>
+      <div class="actions-grid">
+        <button id="dlAll" class="sec">📥 Toutes les images</button>
+        <button id="showScript" class="or">📝 Script & Voix off</button>
+      </div>
+      <div class="actions-grid">
+        <button id="dlFiche" class="sec">📄 Voir la fiche</button>
+        <button id="inspired" class="or">✨ Recette inspirée</button>
+      </div>
+      <div id="genProgress" class="info-photo" style="display:none"></div>
+      <div id="story" class="grid"></div>
+    </div>
+  </section>
+
+  <section id="scriptSection" class="hidden">
+    <div class="card">
+      <h3 class="serif">📝 Script & Voix off</h3>
+
+      <!-- ==== NOUVEAU : PANNEAU VOIX OFF NATIVE ==== -->
+      <div class="voice-panel">
+        <h4>🎙️ Voix off intégrée (gratuit, hors ligne)</h4>
+        <p class="muted" style="margin:0 0 10px">La voix est générée directement par ton téléphone. Aucune connexion requise.</p>
+        <div class="voice-controls">
+          <div>
+            <label for="voiceSelect">Voix</label>
+            <select id="voiceSelect"></select>
+          </div>
+          <div>
+            <label for="rateRange">Vitesse : <span id="rateValue">1</span>x</label>
+            <input type="range" id="rateRange" min="0.5" max="1.8" step="0.1" value="1" style="padding:0;margin-top:8px">
+          </div>
+        </div>
+        <button id="playAllVoice" class="play-all-btn">▶️ Lire toutes les voix off (15 scènes)</button>
+        <div class="voice-btn-row">
+          <button id="stopVoice" class="sec">⏹️ Arrêter</button>
+          <button id="resetVoice" class="sec">🔄 Retour au début</button>
+        </div>
+        <div id="voiceProgress" class="progress-voice"></div>
+      </div>
+
+      <div class="help-box" style="margin-top:14px">
+        <h4>💡 Astuce si la voix ne te plaît pas</h4>
+        <p style="margin:6px 0">Utilise le bouton vert ci-dessous pour copier le script et le coller dans <b>ChatGPT en mode vocal</b> (icône 🎙️). Tu obtiendras une voix plus naturelle.</p>
+      </div>
+
+      <button id="copyChatGPT" class="copy-chatgpt">🤖 Copier pour ChatGPT (voix off)</button>
+      <button id="copyScript" class="copy-btn">📋 Copier le script complet</button>
+      <button id="closeScript" class="sec" style="width:100%;margin-top:6px;padding:12px">✖️ Fermer</button>
+
+      <div id="scriptContent" class="script-view" style="margin-top:16px"></div>
+    </div>
+  </section>
+</main>
+
+<div id="modaleConfirm" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:1000;align-items:center;justify-content:center;padding:20px;box-sizing:border-box">
+  <div style="background:#fff;border-radius:18px;padding:26px 22px;max-width:440px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.4)">
+    <div style="font-size:3rem;margin-bottom:10px">🗑️</div>
+    <h3 style="color:var(--vert);font-family:Georgia,serif;margin:0 0 10px;font-size:1.35rem">Effacer la recette ?</h3>
+    <p style="color:var(--doux);font-size:.95rem;margin:0 0 22px;line-height:1.5">La recette actuelle et les images en cours seront perdues. Cette action est définitive.</p>
+    <button id="confirmOui" style="background:#991b1b;color:#fff;border:0;padding:16px;border-radius:12px;font-weight:700;font-size:1.05rem;width:100%;cursor:pointer;margin-bottom:10px">Oui, effacer</button>
+    <button id="confirmNon" style="background:#fff;color:var(--vert);border:2px solid var(--vert);padding:16px;border-radius:12px;font-weight:700;font-size:1.05rem;width:100%;cursor:pointer">Annuler</button>
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const statusEl = $("status");
+
+let state = { recipe: null, storyboard: [], images: {}, candidates: [] };
+
+/* ============================================================
+   VOIX OFF — MOTEUR NATIF
+   ============================================================ */
+let voiceList = [];
+let currentVoiceIndex = -1;
+let isPlayingAll = false;
+let playAllQueue = [];
+
+function populateVoices() {
+  if (!('speechSynthesis' in window)) {
+    $("voiceSelect").innerHTML = '<option>Aucune voix disponible</option>';
+    return;
+  }
+  const voices = window.speechSynthesis.getVoices();
+  voiceList = voices;
+  const fr = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith('fr'));
+  const others = voices.filter(v => !v.lang || !v.lang.toLowerCase().startsWith('fr'));
+  const sel = $("voiceSelect");
+  sel.innerHTML = "";
+  if (fr.length === 0 && others.length === 0) {
+    sel.innerHTML = '<option value="">Aucune voix détectée</option>';
+    return;
+  }
+  const optF = document.createElement('optgroup'); optF.label = "🇫🇷 Français";
+  fr.forEach(v => { const o = document.createElement('option'); o.value = v.name; o.textContent = v.name + " (" + v.lang + ")"; optF.appendChild(o); });
+  sel.appendChild(optF);
+  if (others.length) {
+    const optO = document.createElement('optgroup'); optO.label = "🌍 Autres langues";
+    others.forEach(v => { const o = document.createElement('option'); o.value = v.name; o.textContent = v.name + " (" + (v.lang||'—') + ")"; optO.appendChild(o); });
+    sel.appendChild(optO);
+  }
+}
+
+function getSelectedVoice() {
+  const name = $("voiceSelect").value;
+  return voiceList.find(v => v.name === name) || null;
+}
+
+function speakScene(index, onEnd) {
+  const s = state.storyboard[index];
+  if (!s) { if (onEnd) onEnd(); return; }
+  const texte = s.voixOff || s.caption || "";
+  if (!texte.trim()) { if (onEnd) onEnd(); return; }
+
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(texte);
+  const v = getSelectedVoice();
+  if (v) u.voice = v;
+  u.lang = (v && v.lang) ? v.lang : 'fr-FR';
+  u.rate = parseFloat($("rateRange").value);
+  u.pitch = 1;
+  u.onend = () => { if (onEnd) onEnd(); };
+  u.onerror = () => { if (onEnd) onEnd(); };
+  window.speechSynthesis.speak(u);
+
+  // Marquer le bouton de la scène en cours
+  document.querySelectorAll(".scene-voice-btn").forEach(b => b.classList.remove("playing"));
+  const btn = document.querySelector('.scene-voice-btn[data-scene="'+index+'"]');
+  if (btn) btn.classList.add("playing");
+}
+
+function playAllVoiceOff() {
+  if (!state.storyboard.length) return;
+  if (isPlayingAll) { stopAllVoice(); return; }
+  isPlayingAll = true;
+  currentVoiceIndex = 0;
+  $("playAllVoice").textContent = "⏸️ Pause";
+  $("voiceProgress").style.display = "block";
+
+  const playNext = () => {
+    if (!isPlayingAll) return;
+    if (currentVoiceIndex >= state.storyboard.length) {
+      stopAllVoice(true);
+      return;
+    }
+    const s = state.storyboard[currentVoiceIndex];
+    const type = s.type === "cover" ? "Couverture" : s.type === "ingredients" ? "Ingrédients" : "Étape";
+    $("voiceProgress").textContent = "🎙️ Scène " + (currentVoiceIndex+1) + "/" + state.storyboard.length + " · " + type;
+
+    speakScene(currentVoiceIndex, () => {
+      if (!isPlayingAll) return;
+      currentVoiceIndex++;
+      setTimeout(playNext, 500); // pause entre scènes
+    });
+  };
+  playNext();
+}
+
+function stopAllVoice(finished) {
+  isPlayingAll = false;
+  window.speechSynthesis.cancel();
+  document.querySelectorAll(".scene-voice-btn").forEach(b => b.classList.remove("playing"));
+  $("playAllVoice").textContent = "▶️ Lire toutes les voix off (15 scènes)";
+  if (finished) {
+    $("voiceProgress").textContent = "✅ Lecture terminée !";
+    setTimeout(() => { $("voiceProgress").style.display = "none"; }, 3000);
+  } else {
+    $("voiceProgress").style.display = "none";
+  }
+}
+
+/* ============================================================
+   SUITE DE L'APPLICATION FAFA (inchangée)
+   ============================================================ */
+function sauvegarder() {
+  try {
+    localStorage.setItem("fafa_etat", JSON.stringify({
+      recipe: state.recipe, storyboard: state.storyboard, images: {}, savedAt: new Date().toISOString()
+    }));
+  } catch(e) {}
+}
+function restaurer() {
+  try {
+    const raw = localStorage.getItem("fafa_etat");
+    if (!raw) return false;
+    const data = JSON.parse(raw);
+    if (!data.recipe) return false;
+    state.recipe = data.recipe;
+    state.storyboard = data.storyboard || [];
+    state.images = {};
+    renderRecipe(null);
+    setStatus("📂 Recette restaurée.", "ok");
+    return true;
+  } catch(e) { return false; }
+}
+function loadKeys() {
+  try {
+    const k = JSON.parse(localStorage.getItem("fafa_keys") || "{}");
+    if (k.mistral) $("kMistral").value = k.mistral;
+    if (k.agnes) $("kAgnes").value = k.agnes;
+    if (k.youtube) $("kYoutube").value = k.youtube;
+  } catch {}
+}
+function getKeys() {
+  const saved = JSON.parse(localStorage.getItem("fafa_keys") || "{}");
+  return {
+    mistral: $("kMistral").value.trim() || saved.mistral || "",
+    agnes: $("kAgnes").value.trim() || saved.agnes || "",
+    youtube: $("kYoutube").value.trim() || saved.youtube || ""
+  };
+}
+$("saveKeys").onclick = () => {
+  const k = { mistral: $("kMistral").value.trim(), agnes: $("kAgnes").value.trim(), youtube: $("kYoutube").value.trim() };
+  localStorage.setItem("fafa_keys", JSON.stringify(k));
+  setStatus("✅ Clés enregistrées.", "ok");
+  $("settings").open = false;
+};
+loadKeys();
+
+function setStatus(msg, kind) { statusEl.innerHTML = msg ? '<div class="status ' + (kind||"") + '">' + msg + '</div>' : ""; }
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+
+const SUGGESTIONS = ["bœuf bourguignon","cassoulet","blanquette de veau","poulet rôti","lasagnes bolognaise","hachis parmentier","quiche lorraine","gratin dauphinois","couscous royal","paella","risotto poulet champignons","tartiflette","choucroute garnie","pot-au-feu","coq au vin","soupe à l'oignon","ratatouille","crêpes","tarte tatin","clafoutis aux cerises","fondant au chocolat","macaronis au cheddar","pizza maison","burger maison","pad thaï poulet","curry poulet coco","chili con carne","cordon bleu maison","croque monsieur","poulet rôti airfryer"];
+function renderSuggestions() {
+  const el = $("suggestions"); if (!el) return; el.innerHTML = "";
+  SUGGESTIONS.forEach(s => {
+    const b = document.createElement("button");
+    b.className = "suggestion"; b.textContent = s;
+    b.onclick = () => { $("q").value = s; $("searchDirect").click(); };
+    el.appendChild(b);
+  });
+}
+
+async function rechercheYouTube(query) {
+  const k = getKeys();
+  if (!k.youtube) throw new Error("Ajoute ta clé YouTube dans ⚙️");
+  const url1 = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=20&order=viewCount&q=" + encodeURIComponent(query) + "&key=" + k.youtube;
+  const r1 = await fetch(url1);
+  if (!r1.ok) throw new Error("YouTube search : " + r1.status);
+  const d1 = await r1.json();
+  const ids = (d1.items||[]).map(i => i.id?.videoId).filter(Boolean);
+  if (!ids.length) return [];
+  const url2 = "https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id=" + ids.join(",") + "&key=" + k.youtube;
+  const r2 = await fetch(url2);
+  if (!r2.ok) throw new Error("YouTube stats : " + r2.status);
+  const d2 = await r2.json();
+  return (d2.items||[]).map(i => ({
+    title: i.snippet.title, creator: i.snippet.channelTitle,
+    videoUrl: "https://www.youtube.com/watch?v=" + i.id,
+    viewCount: i.statistics.viewCount ? Number(i.statistics.viewCount) : 0,
+    publishedAt: i.snippet.publishedAt
+  })).sort((a,b) => b.viewCount - a.viewCount);
+}
+
+async function texteChat(prompt, jsonMode) {
+  const k = getKeys();
+  const erreurs = [];
+  if (k.agnes) {
+    try {
+      const body = { model: "agnes-2.5-flash", messages: [{ role: "user", content: jsonMode ? "Réponds UNIQUEMENT en JSON valide.\n\n" + prompt : prompt }], temperature: 0.4, max_tokens: 4500, stream: false };
+      if (jsonMode) body.response_format = { type: "json_object" };
+      const r = await fetch("https://apihub.agnes-ai.com/v1/chat/completions", { method: "POST", headers: { "Authorization": "Bearer " + k.agnes, "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      const data = await r.json().catch(()=>({}));
+      if (r.ok) { const t = data.choices?.[0]?.message?.content || ""; if (t.trim()) return { text: t, provider: "agnes" }; erreurs.push("Agnès : vide"); } else erreurs.push("Agnès " + r.status);
+    } catch(e) { erreurs.push("Agnès : " + e.message); }
+  }
+  if (k.mistral) {
+    try {
+      const body = { model: "mistral-small-latest", messages: [{ role: "user", content: jsonMode ? "Réponds UNIQUEMENT en JSON valide.\n\n" + prompt : prompt }], temperature: 0.4, max_tokens: 4500 };
+      if (jsonMode) body.response_format = { type: "json_object" };
+      const r = await fetch("https://api.mistral.ai/v1/chat/completions", { method: "POST", headers: { "Authorization": "Bearer " + k.mistral, "Content-Type": "application/json" }, body: JSON.stringify(body) });
+      const data = await r.json().catch(()=>({}));
+      if (r.ok) { const t = data.choices?.[0]?.message?.content || ""; if (t.trim()) return { text: t, provider: "mistral" }; erreurs.push("Mistral : vide"); } else erreurs.push("Mistral " + r.status);
+    } catch(e) { erreurs.push("Mistral : " + e.message); }
+  }
+  throw new Error(erreurs.join(" · ") || "Aucune clé configurée.");
+}
+
+async function imageGen(promptCourt) {
+  const k = getKeys();
+  if (!k.agnes) throw new Error("Ajoute ta clé Agnès dans ⚙️.");
+  const r = await fetch("https://apihub.agnes-ai.com/v1/images/generations", {
+    method: "POST",
+    headers: { "Authorization": "Bearer " + k.agnes, "Content-Type": "application/json" },
+    body: JSON.stringify({ model: "agnes-image-2.1-flash", prompt: promptCourt, size: "1K", ratio: "9:16", return_base64: true })
+  });
+  if (!r.ok) throw new Error("Agnès image " + r.status);
+  const data = await r.json().catch(()=>({}));
+  const item = data?.data?.[0];
+  if (item?.b64_json) return "data:image/png;base64," + item.b64_json.replace(/^data:image\/[^;]+;base64,/,"");
+  if (item?.url) {
+    const ir = await fetch(item.url);
+    const blob = await ir.blob();
+    return await new Promise(res => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.readAsDataURL(blob); });
+  }
+  throw new Error("Agnès n'a pas renvoyé d'image.");
+}
+
+function extractJson(t) {
+  const raw = String(t||"").trim().replace(/^```(?:json)?\s*/i,"").replace(/```$/,"");
+  try { return JSON.parse(raw); } catch {}
+  const s = raw.indexOf("{"); if (s<0) return null;
+  let d=0,q=false,e=false;
+  for (let i=s;i<raw.length;i++){ const c=raw[i]; if(q){if(e)e=false;else if(c==="\\")e=true;else if(c==='"')q=false;} else if(c==='"')q=true; else if(c==="{")d++; else if(c==="}"&&--d===0){try{return JSON.parse(raw.slice(s,i+1))}catch{return null}} }
+  return null;
+}
+
+$("searchYt").onclick = async () => {
+  let q = $("q").value.trim();
+  const k = getKeys();
+  if (!k.youtube) { setStatus("👉 Ajoute ta clé YouTube dans ⚙️", "err"); $("settings").open = true; return; }
+  if (!q) {
+    setStatus("Recherche des recettes les plus vues sur YouTube…");
+    $("results").classList.add("hidden"); $("recipe").classList.add("hidden"); $("scriptSection").classList.add("hidden");
+    try {
+      const termes = ["recette facile", "recette rapide", "recette familiale", "recette française"];
+      const resultats = await Promise.all(termes.map(t => rechercheYouTube(t).catch(() => [])));
+      const vus = new Set(); const tous = [];
+      resultats.flat().forEach(v => { if (!vus.has(v.videoUrl)) { vus.add(v.videoUrl); tous.push(v); } });
+      tous.sort((a,b) => b.viewCount - a.viewCount);
+      state.candidates = tous.slice(0, 20);
+      if (!state.candidates.length) { setStatus("Aucune vidéo trouvée.", "warn"); return; }
+      renderResults();
+      setStatus("✅ Top " + state.candidates.length + " recettes les plus vues.", "ok");
+    } catch(e) { setStatus("❌ " + e.message, "err"); }
+    return;
+  }
+  setStatus("Recherche YouTube en cours…");
+  $("results").classList.add("hidden"); $("recipe").classList.add("hidden"); $("scriptSection").classList.add("hidden");
+  try {
+    const vids = await rechercheYouTube(q);
+    state.candidates = vids;
+    if (!vids.length) { setStatus("Aucune vidéo trouvée.", "warn"); return; }
+    renderResults();
+    setStatus("✅ " + vids.length + " vidéos trouvées.", "ok");
+  } catch(e) { setStatus("❌ " + e.message, "err"); }
+};
+
+function renderResults() {
+  const el = $("resultsList"); el.innerHTML = "";
+  state.candidates.forEach(c => {
+    const div = document.createElement("div"); div.className = "video-card";
+    const vues = c.viewCount ? Number(c.viewCount).toLocaleString("fr-FR") + " vues" : "vues non vérifiées";
+    div.innerHTML = '<h4>' + esc(c.title) + '</h4>' + '<div class="meta">' + esc(c.creator) + '</div>' + '<span class="vues">👁️ ' + vues + '</span>';
+    div.onclick = () => { createRecipeFromVideo(c); };
+    el.appendChild(div);
+  });
+  $("results").classList.remove("hidden");
+  setTimeout(() => $("results").scrollIntoView({behavior:"smooth", block:"start"}), 100);
+}
+
+const PROMPT_BASE = [
+  "Tu es l'assistant vidéo TikTok de « Les recettes de Fafa ».",
+  "Crée une recette familiale pour 4 personnes, sans porc ni alcool.",
+  "",
+  "Réponds UNIQUEMENT en JSON avec cette structure exacte :",
+  '{"recipe":{"title":"...","hook":"...","servings":4,"prepTime":"...","cookTime":"...","sourceNote":"Recette Fafa","ingredients":[{"quantity":"...","name":"..."}],"steps":[{"number":1,"title":"...","action":"..."}]},"storyboard":[{"number":1,"type":"cover","titreChoc":"...","textEcran":"...","caption":"...","imagePrompt":"...","voixOff":"..."},{"number":2,"type":"ingredients","title":"Les ingrédients","caption":"...","imagePrompt":"...","voixOff":"..."},{"number":3,"type":"step","title":"...","caption":"...","imagePrompt":"...","voixOff":"..."}]}',
+  "",
+  "RÈGLES ABSOLUES :",
+  "1. Storyboard = EXACTEMENT 15 scènes.",
+  "2. TOUT le texte EN FRANÇAIS.",
+  "3. Le champ 'title' des steps ne doit JAMAIS contenir de numéro au début.",
+  "4. Chaque imagePrompt fait MAXIMUM 200 caractères.",
+  "5. Chaque voixOff est une PHRASE COMPLÈTE en français naturel, tutoiement, ton TikTok dynamique.",
+  "",
+  "STRUCTURE DU STORYBOARD :",
+  "- Scène 1 (type=cover) : accroche choc + plat fini. titreChoc (3 mots max), textEcran (4-6 mots), voixOff accrocheuse.",
+  "- Scène 2 (type=ingredients) : vue à plat de TOUS les ingrédients avec quantités.",
+  "- Scènes 3 à 13 : 11 étapes. Pour chaque : title (sans numéro), caption TikTok, imagePrompt (mode cuisson : 'au four' / 'à la poêle' / 'aucun feu'), voixOff (1 phrase naturelle).",
+  "- Scène 14 : dressage final.",
+  "- Scène 15 : plan final du plat servi.",
+  "",
+  "CONSISTANCE VISUELLE : chaque imagePrompt garde le MÊME décor : plan bois clair, crédence marbre, gazinière inox, lumière naturelle. Si four → aucune gazinière visible. Si refroidissement/dressage → aucun feu ni four visible."
+].join("\n");
+
+async function createRecipeFromVideo(video) {
+  setStatus("Génération de la recette à partir de la vidéo… (30-50 s)");
+  $("results").classList.add("hidden"); $("scriptSection").classList.add("hidden");
+  const prompt = "Vidéo source : " + JSON.stringify({ title: video.title, creator: video.creator }) + "\n\n" + PROMPT_BASE;
+  try {
+    const r = await texteChat(prompt, true);
+    const data = extractJson(r.text);
+    if (!data?.recipe) throw new Error("Aucune recette générée.");
+    state.recipe = data.recipe;
+    state.storyboard = (data.storyboard || []).slice(0, 15);
+    state.images = {};
+    renderRecipe(r.provider);
+    sauvegarder();
+    setStatus("✅ Recette prête : 15 scènes. Fournisseur : " + r.provider, "ok");
+  } catch(e) { setStatus("❌ " + e.message, "err"); }
+}
+
+$("searchDirect").onclick = async () => {
+  const q = $("q").value.trim();
+  if (!q) return;
+  const k = getKeys();
+  if (!k.agnes && !k.mistral) { setStatus("👉 Ajoute ta clé Agnès dans ⚙️", "err"); $("settings").open = true; return; }
+  setStatus("Création de la recette… (30-50 s)");
+  $("results").classList.add("hidden"); $("recipe").classList.add("hidden"); $("scriptSection").classList.add("hidden");
+  try {
+    const prompt = "Sujet : " + q + "\n\n" + PROMPT_BASE;
+    const r = await texteChat(prompt, true);
+    const data = extractJson(r.text);
+    if (!data?.recipe) throw new Error("Aucune recette générée.");
+    state.recipe = data.recipe;
+    state.storyboard = (data.storyboard || []).slice(0, 15);
+    state.images = {};
+    renderRecipe(r.provider);
+    sauvegarder();
+    setStatus("✅ Recette prête : 15 scènes. Fournisseur : " + r.provider, "ok");
+  } catch(e) { setStatus("❌ " + e.message, "err"); }
+};
+
+function renderRecipe(provider) {
+  const r = state.recipe;
+  const words = (r.title||"").split(" ");
+  const cut = Math.max(1, Math.ceil(words.length/2));
+  $("rTitle").textContent = words.slice(0,cut).join(" ");
+  $("rSub").textContent = words.slice(cut).join(" ") || (r.hook||"");
+  $("rMeta").textContent = (r.servings||4) + " personnes · Prépa " + (r.prepTime||"—") + " · Cuisson " + (r.cookTime||"—");
+  $("rIng").innerHTML = (r.ingredients||[]).map(i => '<li><b>'+esc(i.quantity||'—')+'</b>'+esc(i.name)+'</li>').join("");
+
+  $("rSteps").innerHTML = (r.steps||[]).map(s => {
+    let titreBrut = String(s.title || "");
+    titreBrut = titreBrut.replace(/^\s*\d+\s*[\.\)\-:]?\s*/g, "");
+    titreBrut = titreBrut.replace(/^\s*[\.\)\-:]+\s*/, "").trim();
+    const titre = esc(titreBrut);
+    return '<li><b>'+(s.number||1)+'. '+titre+'</b><p>'+esc(s.action)+'</p></li>';
+  }).join("");
+
+  if (provider) $("provBadge").innerHTML = '<span class="provider '+provider+'">'+provider+'</span>';
+  else $("provBadge").innerHTML = '';
+  const cover = $("rCover"); cover.removeAttribute("src"); cover.style.background = "#f0ebe0";
+  const g = $("story"); g.innerHTML = "";
+  state.storyboard.forEach((s,i) => {
+    const d = document.createElement("div"); d.className = "scene";
+    const typeBadge = s.type === "cover" ? "🎬 Couverture" : s.type === "ingredients" ? "🥕 Ingrédients" : "Scène";
+    let accrocheHTML = "";
+    if (s.type === "cover" && (s.titreChoc || s.textEcran)) {
+      accrocheHTML = '<div style="background:linear-gradient(135deg,#e11d48,#c8963e);color:#fff;padding:10px;border-radius:8px;margin-bottom:8px;text-align:center;font-weight:800;font-size:.9rem;line-height:1.25">' +
+        (s.titreChoc ? '<div style="font-size:.72rem;opacity:.85;letter-spacing:.5px;margin-bottom:2px">🔥 ACCROCHE VIRALE</div>' : '') +
+        (s.titreChoc ? '<div>' + esc(s.titreChoc) + '</div>' : '') +
+        (s.textEcran ? '<div style="margin-top:4px;font-size:.78rem;opacity:.9">« ' + esc(s.textEcran) + ' »</div>' : '') +
+      '</div>';
+    }
+    // Ajout d'un bouton "🎙️ Écouter" pour chaque scène
+    d.innerHTML = accrocheHTML + '<div class="titre">' + typeBadge + ' ' + (s.number||i+1) + '</div>' + '<div id="img-'+i+'" style="aspect-ratio:9/16;background:#e8e2d6;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#999;font-size:.8rem">—</div>' + '<div class="caption">' + esc(s.caption || s.title || "") + '</div>' + '<button class="sec" style="margin-top:6px;padding:8px;font-size:.82rem">Générer</button>' + '<button class="scene-voice-btn" data-scene="'+i+'">🎙️ Écouter</button>' + '<button class="btn-dl hidden" id="dl-'+i+'" style="margin-top:6px">💾 Télécharger</button>';
+    d.querySelectorAll("button")[0].onclick = () => genImage(i);
+    d.querySelector('.scene-voice-btn').onclick = () => speakScene(i);
+    g.appendChild(d);
+  });
+  $("recipe").classList.remove("hidden");
+  $("resetZone").style.display = "block";
+  setTimeout(() => $("recipe").scrollIntoView({behavior:"smooth", block:"start"}), 150);
+}
+
+async function genImage(i, retry) {
+  retry = retry || 0;
+  const s = state.storyboard[i]; if (!s) return;
+  const box = $("img-"+i); if (box) { box.textContent = "⏳"; box.style.color = "#c8963e"; }
+  try {
+    const ing = (state.recipe.ingredients||[]).map(x => x.name).filter(Boolean).slice(0,8).join(", ");
+    const actionTexte = ((s.imagePrompt||"") + " " + (s.title||"") + " " + (s.action||"") + " " + (s.caption||"")).toLowerCase();
+    let decor = ""; let action = "";
+
+    if (/refroidir|refroidit|reposer|repose|patience|attendre|laisser|démoul|retourner|servir|sers|dresser|dresse|dressage|assiette|couper|coupe|part|déguster|déguste|présent|décor|dépose|nappe|boule de glace/.test(actionTexte)) {
+      decor = "Plan de travail en bois clair. Plat posé sur une assiette blanche. AUCUN FEU, AUCUNE gazinière, AUCUN four visible.";
+      action = "Les mains manipulent délicatement le plat déjà cuit.";
+    }
+    else if (/\bfour\b|enfourn|cuire au four|au four|pâtisserie|gâteau|tarte|gratin|quiche|lasagnes|clafoutis|fondant|brioche|cake|muffin|180°|200°/.test(actionTexte)) {
+      decor = "Four de cuisine ouvert avec grille métallique, lumière allumée. AUCUNE gazinière visible.";
+      action = "Le plat est posé dans le four ouvert.";
+    }
+    else if (/mélang|remue|revenir|saisir|mijot|frémir|poêle|casserole|dorer|sauter|bouillir|chauffer|ragoût|sauce|soupe|caramel/.test(actionTexte)) {
+      decor = "Gazinière inox avec feu bleu allumé. AUCUN four visible.";
+      action = "Poêle ou casserole sur la gazinière, feu bleu visible, vapeur légère.";
+    }
+    else if (/vers|bouillon|incorpore|nappe/.test(actionTexte)) {
+      decor = "Plan de travail en bois clair. AUCUN feu.";
+      action = "Les mains versent un liquide depuis un bol en verre.";
+    }
+    else if (/coupe|épluch|découp|hach|cisel|tranche|éminc/.test(actionTexte)) {
+      decor = "Plan de travail en bois clair. AUCUN feu.";
+      action = "Les mains tiennent un couteau sur planche à découper.";
+    }
+    else if (/sale|poivr|assaison|herbe|épice|saupoudr/.test(actionTexte)) {
+      decor = "Plan de travail en bois clair. AUCUN feu.";
+      action = "Les mains saupoudrent sel, poivre ou herbes.";
+    }
+    else {
+      decor = "Cuisine bois clair, crédence marbre, lumière naturelle chaude. AUCUN feu.";
+      action = "Les mains préparent les ingrédients.";
+    }
+
+    const ANTI_TEXTE = " Aucun texte dans l'image, aucune écriture, aucun logo, aucun visage.";
+    let prompt = "";
+    if (s.type === "cover") {
+      prompt = `Photo culinaire réaliste verticale 9:16. GROS PLAN sur le plat fini : ${state.recipe.title}. Assiette creuse blanche sur plan bois clair, crédence marbre flou. Vapeur légère, herbes fraîches, lumière naturelle chaude, rendu magazine appétissant.` + ANTI_TEXTE;
+    } else if (s.type === "ingredients") {
+      prompt = `Photo flat lay verticale 9:16 vue de dessus. Ingrédients : ${ing}. Bols en verre sur plan bois clair. Lumière naturelle douce.` + ANTI_TEXTE;
+    } else {
+      prompt = `Cuisine familiale élégante. ${decor} ${action} Recette : ${state.recipe.title}. Ingrédients présents : ${ing}. Photo réaliste verticale 9:16.` + ANTI_TEXTE;
+    }
+    if (prompt.length > 900) prompt = prompt.substring(0, 900);
+
+    const url = await imageGen(prompt);
+    state.images[i] = url;
+    if (box) { box.innerHTML = '<img src="'+url+'" style="width:100%;border-radius:9px;display:block">'; box.style.background = ""; }
+    const dlBtn = $("dl-"+i); if (dlBtn) { dlBtn.classList.remove("hidden"); dlBtn.onclick = () => downloadImage(url, i); }
+    if (i === 0) { $("rCover").src = url; $("rCover").style.background = ""; }
+    return true;
+  } catch(e) {
+    if ((String(e.message).includes("fetch") || String(e.message).includes("network")) && retry < 2) {
+      if (box) { box.textContent = "⏳ Retry…"; box.style.color = "#c8963e"; }
+      await new Promise(r => setTimeout(r, 4000));
+      return genImage(i, retry + 1);
+    }
+    if (box) { box.innerHTML = '<div style="color:#991b1b;font-size:.75rem;text-align:center;padding:8px">❌ ' + esc(e.message) + '</div>'; }
+    throw e;
+  }
+}
+
+function downloadImage(dataUrl, i) {
+  const s = state.storyboard[i];
+  const baseName = (state.recipe?.title || "recette").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const num = String((s.number||i+1)).padStart(2, "0");
+  const type = s.type || "scene";
+  const filename = baseName + "_" + num + "_" + type + ".png";
+  try {
+    const parts = dataUrl.split(",");
+    const mime = (parts[0].match(/:(.*?);/) || [])[1] || "image/png";
+    const bstr = atob(parts[1]);
+    const n = bstr.length; const u8 = new Uint8Array(n);
+    for (let j = 0; j < n; j++) u8[j] = bstr.charCodeAt(j);
+    const blob = new Blob([u8], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a"); a.href = url; a.download = filename; a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 3000);
+  } catch(e) {
+    const a = document.createElement("a"); a.href = dataUrl; a.download = filename; a.click();
+  }
+}
+
+$("genAll").onclick = async () => {
+  const total = state.storyboard.length; if (!total) return;
+  const prog = $("genProgress"); prog.style.display = "block";
+  let ok = 0, fail = 0;
+  for (let i=0;i<total;i++){
+    if (state.images[i]) { ok++; continue; }
+    prog.textContent = "📸 Scène "+(i+1)+" / "+total+"…";
+    try { await genImage(i); ok++; } catch(e) { fail++; }
+    await new Promise(r=>setTimeout(r,2000));
+  }
+  prog.innerHTML = "✅ Terminé : <b>"+ok+"</b> photo(s)" + (fail ? " · ❌ "+fail+" échec(s)" : "");
+};
+
+$("dlAll").onclick = async () => {
+  let done = 0;
+  for (let i=0;i<state.storyboard.length;i++){ if (state.images[i]) { downloadImage(state.images[i], i); done++; await new Promise(r=>setTimeout(r,300)); } }
+  setStatus(done ? "✅ " + done + " image(s) en téléchargement." : "❌ Aucune image.", done ? "ok" : "warn");
+};
+
+function buildScriptComplet() {
+  const r = state.recipe; if (!r) return "";
+  let txt = "═══════════════════════════════════════════\n  LES RECETTES DE FAFA — SCRIPT VIDÉO TIKTOK\n═══════════════════════════════════════════\n\n";
+  txt += "TITRE : " + (r.title||"") + "\nACCROCHE : " + (r.hook||"") + "\nPERSONNES : " + (r.servings||4) + "\nPRÉPARATION : " + (r.prepTime||"—") + "\nCUISSON : " + (r.cookTime||"—") + "\nFORMAT : 9:16 · TikTok · 15 scènes\n\n";
+  txt += "─── INGRÉDIENTS ───\n";
+  (r.ingredients||[]).forEach(i => { txt += "• " + (i.quantity||"") + " " + (i.name||"") + "\n"; });
+  txt += "\n─── SCRIPT SCÈNE PAR SCÈNE ───\n\n";
+  let t = 0;
+  state.storyboard.forEach((s, i) => {
+    const dur = i === 0 ? 2 : 4;
+    const end = t + dur;
+    const fmt = (sec) => Math.floor(sec/60) + ":" + String(sec%60).padStart(2, "0");
+    const type = s.type === "cover" ? "PAGE DE GARDE" : s.type === "ingredients" ? "INGRÉDIENTS" : "ÉTAPE";
+    txt += "── SCÈNE " + (s.number||i+1) + " · " + type + " · " + fmt(t) + " → " + fmt(end) + " (" + dur + " s) ──\n";
+    if (s.titreChoc) txt += "🔥 " + s.titreChoc + "\n";
+    if (s.textEcran) txt += "📺 " + s.textEcran + "\n";
+    txt += "Caption : " + (s.caption||"") + "\n🎙️ VOIX OFF : " + (s.voixOff || s.caption || "") + "\n\n";
+    t = end;
+  });
+  return txt;
+}
+
+function buildScriptChatGPT() {
+  const r = state.recipe; if (!r) return "";
+  let txt = "Bonjour ! Peux-tu me lire ce texte à voix haute en français, ton chaleureux et dynamique, avec une voix féminine, à 1,1× de vitesse ? Lis UNIQUEMENT les phrases qui suivent chaque \"VOIX OFF :\". Fais une petite pause d'une seconde entre chaque scène.\n\n";
+  txt += "═══════════════════════════════\n";
+  txt += "  VOIX OFF — " + (r.title||"Recette") + "\n";
+  txt += "═══════════════════════════════\n\n";
+  state.storyboard.forEach((s, i) => {
+    const phrase = s.voixOff || s.caption || "";
+    if (!phrase) return;
+    txt += "VOIX OFF : " + phrase + "\n\n";
+  });
+  txt += "Merci ! 🎙️";
+  return txt;
+}
+
+$("showScript").onclick = () => {
+  if (!state.recipe) { setStatus("Génère d'abord une recette.", "warn"); return; }
+  $("scriptContent").textContent = buildScriptComplet();
+  $("scriptSection").classList.remove("hidden");
+  $("recipe").classList.add("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+  setStatus("✅ Script affiché. Utilise 🎙️ Lire toutes les voix off.", "ok");
+};
+
+$("closeScript").onclick = () => {
+  stopAllVoice();
+  $("scriptSection").classList.add("hidden");
+  $("recipe").classList.remove("hidden");
+  $("recipe").scrollIntoView({behavior:"smooth", block:"start"});
+};
+
+$("copyScript").onclick = async () => {
+  const txt = $("scriptContent").textContent;
+  if (!txt) return;
+  try {
+    await navigator.clipboard.writeText(txt);
+    $("copyScript").classList.add("ok");
+    $("copyScript").textContent = "✅ Script complet copié !";
+    setTimeout(() => { $("copyScript").classList.remove("ok"); $("copyScript").textContent = "📋 Copier le script complet"; }, 2000);
+  } catch(e) {
+    const range = document.createRange();
+    range.selectNode($("scriptContent"));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    setStatus("👉 Texte sélectionné. Appuie long → Copier.", "warn");
+  }
+};
+
+$("copyChatGPT").onclick = async () => {
+  if (!state.recipe) { setStatus("Génère d'abord une recette.", "warn"); return; }
+  const txt = buildScriptChatGPT();
+  try {
+    await navigator.clipboard.writeText(txt);
+    $("copyChatGPT").classList.add("ok");
+    $("copyChatGPT").textContent = "✅ Copié ! Colle dans ChatGPT vocal 🎙️";
+    setTimeout(() => { $("copyChatGPT").classList.remove("ok"); $("copyChatGPT").textContent = "🤖 Copier pour ChatGPT (voix off)"; }, 3000);
+    setStatus("✅ Colle dans ChatGPT en mode vocal (icône 🎙️) → il te lit la voix off.", "ok");
+  } catch(e) {
+    $("scriptContent").textContent = txt;
+    const range = document.createRange();
+    range.selectNode($("scriptContent"));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    setStatus("👉 Texte sélectionné. Appuie long → Copier.", "warn");
+  }
+};
+
+$("inspired").onclick = async () => {
+  if (!state.recipe) return; setStatus("Création d'une variante…");
+  try {
+    const prompt = "Voici une recette source : " + JSON.stringify(state.recipe) + "\n\nCrée une variante ORIGINALE pour 4 personnes, sans porc ni alcool. Change au moins 2 ingrédients et 2 étapes. TOUT EN FRANÇAIS. Réponds en JSON : {\"recipe\":{\"title\":\"...\",\"hook\":\"...\",\"servings\":4,\"prepTime\":\"...\",\"cookTime\":\"...\",\"sourceNote\":\"Variante Fafa\",\"ingredients\":[{\"quantity\":\"...\",\"name\":\"...\"}],\"steps\":[{\"number\":1,\"title\":\"...\",\"action\":\"...\"}]}}";
+    const r = await texteChat(prompt, true); const data = extractJson(r.text); if (!data?.recipe) throw new Error("Variante non générée.");
+    state.recipe = data.recipe; state.storyboard = []; state.images = {}; renderRecipe(r.provider); sauvegarder(); setStatus("✨ Variante prête !", "ok");
+  } catch(e) { setStatus("❌ " + e.message, "err"); }
+};
+
+$("dlFiche").onclick = () => {
+  if (!state.recipe) return;
+  const r = state.recipe; const e = esc;
+  const words = (r.title||"").split(" "); const cut = Math.max(1, Math.ceil(words.length/2));
+  const t1 = words.slice(0,cut).join(" "); const t2 = words.slice(cut).join(" ");
+  const ing = (r.ingredients||[]).map(i => "<li><b>"+e(i.quantity||'—')+"</b> "+e(i.name)+"</li>").join("");
+  const steps = (r.steps||[]).map(s => {
+    let t = String(s.title||"").replace(/^\s*\d+\s*[\.\)\-:]?\s*/g, "").replace(/^\s*[\.\)\-:]+\s*/, "").trim();
+    return "<li><b>"+s.number+". "+e(t)+"</b><p>"+e(s.action)+"</p></li>";
+  }).join("");
+  const cover = state.images[0] || "";
+  const html = "<!doctype html><html lang='fr'><head><meta charset='utf-8'><title>"+e(r.title)+"</title><meta name='viewport' content='width=device-width,initial-scale=1'><style>body{margin:0;background:#faf8f3;font-family:-apple-system,system-ui,sans-serif;color:#1f1a15;line-height:1.6}.cover{background:#fff;max-width:520px;margin:16px auto;border-radius:16px;overflow:hidden;text-align:center;border:1px solid #e8e2d6}.haut{padding:24px 18px 12px}.marque{color:#143d28;font-family:Georgia,serif;font-size:.95rem;font-weight:600}.filet{width:60px;height:2px;background:#c8963e;margin:12px auto 16px}h1{color:#143d28;font-family:Georgia,serif;font-size:2rem;margin:8px 0;text-transform:uppercase}h2.sub{color:#143d28;font-family:Georgia,serif;font-size:1.35rem;margin:0 0 16px}.photo{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:#f0ebe0}.pied{padding:16px;color:#143d28;font-family:Georgia,serif;font-size:1.15rem;font-weight:600;border-top:1px solid #e8e2d6}.card{background:#fff;max-width:520px;margin:16px auto;border-radius:14px;padding:20px;border:1px solid #e8e2d6}.card h3{color:#143d28;font-family:Georgia,serif;margin:0 0 14px;font-size:1.2rem}.ing li{list-style:none;padding:12px 0;border-bottom:1px dashed #e8e2d6}.ing b{color:#143d28;display:block;font-size:.88rem;text-transform:uppercase}.steps{padding-left:0;list-style:none}.steps li{margin:18px 0}.steps li b{color:#143d28;display:block;font-family:Georgia,serif;font-size:1.1rem}</style></head><body><div class='cover'><div class='haut'><div class='marque'>🍲 Les recettes de Fafa</div><div class='filet'></div><h1>"+e(t1)+"</h1>"+(t2?"<h2 class='sub'>"+e(t2)+"</h2>":"")+"</div>"+(cover?"<img class='photo' src='"+cover+"'>":"<div class='photo'></div>")+"<div class='pied'>La recette étape par étape</div></div><div class='card'><h3>Ingrédients</h3><ul class='ing'>"+ing+"</ul></div><div class='card'><h3>Préparation</h3><ul class='steps'>"+steps+"</ul></div></body></html>";
+  const blob = new Blob([html], { type: "text/html;charset=utf-8" }); const url = URL.createObjectURL(blob);
+  const win = window.open(url, "_blank");
+  if (!win) setStatus('👉 Popup bloqué.', "warn");
+};
+
+$("nouvelleRecette").onclick = () => { $("modaleConfirm").style.display = "flex"; };
+$("confirmNon").onclick = () => { $("modaleConfirm").style.display = "none"; };
+$("confirmOui").onclick = () => {
+  $("modaleConfirm").style.display = "none";
+  stopAllVoice();
+  localStorage.removeItem("fafa_etat");
+  state = { recipe: null, storyboard: [], images: {}, candidates: [] };
+  $("recipe").classList.add("hidden"); $("results").classList.add("hidden"); $("scriptSection").classList.add("hidden");
+  $("q").value = ""; $("resetZone").style.display = "none";
+  setStatus("✅ Prêt pour une nouvelle recette.", "ok");
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+
+/* ==== Boutons de voix off ==== */
+$("playAllVoice").onclick = playAllVoiceOff;
+$("stopVoice").onclick = () => stopAllVoice();
+$("resetVoice").onclick = () => { stopAllVoice(); currentVoiceIndex = 0; $("voiceProgress").textContent = "🔄 Prêt à recommencer."; $("voiceProgress").style.display = "block"; setTimeout(() => $("voiceProgress").style.display = "none", 2000); };
+$("rateRange").oninput = () => { $("rateValue").textContent = $("rateRange").value; };
+
+/* ==== Initialisation ==== */
+renderSuggestions();
+
+// Charger les voix (asynchrone sur Android)
+if ('speechSynthesis' in window) {
+  populateVoices();
+  window.speechSynthesis.onvoiceschanged = populateVoices;
+  // Certains navigateurs Android ont besoin d'un délai
+  setTimeout(populateVoices, 500);
+  setTimeout(populateVoices, 2000);
+}
+
+setTimeout(() => {
+  const k = getKeys();
+  const restaure = restaurer();
+  if (!restaure) {
+    if (!k.agnes && !k.mistral) { setStatus("👉 Ouvre ⚙️ Mes API et colle ta clé Agnès.", "warn"); $("settings").open = true; }
+    else if (k.agnes && k.youtube) { setStatus("✅ Prêt. Agnès + YouTube opérationnels.", "ok"); }
+    else if (k.agnes) { setStatus("✅ Prêt. Ajoute la clé YouTube pour voir les vues.", "ok"); }
+  }
+}, 200);
+</script>
+</body>
+</html>
