@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#153e2b">
+<title>Les recettes de Fafa — Studio unique</title>
+<style>
+:root{--green:#153e2b;--gold:#bf873d;--rust:#ae4b33;--paper:#f9f6ef;--line:#e6dfd1;--ink:#29251f;--muted:#6a645e;--card:#fff}
+*{box-sizing:border-box}body{margin:0;background:#f5f0e8;color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:940px;margin:auto;padding:16px 16px 60px}.head{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;gap:13px;align-items:center}.logo{display:grid;place-items:center;background:var(--rust);border-radius:18px;width:60px;height:60px;font-size:30px}.brand{font-weight:850;font-size:1.3rem;color:var(--green)}.muted{color:var(--muted)}.tiny{font-size:.85rem}.tag{color:var(--rust);font-weight:750;font-size:.83rem;letter-spacing:.08em;text-transform:uppercase}.nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:17px 0;padding-bottom:4px}
+button,.btn{font:inherit;background:var(--green);color:#fff;border:1px solid var(--green);padding:11px 14px;border-radius:12px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}button.secondary,.btn.secondary{background:#fff;color:var(--green);border-color:var(--line)}button.active{background:var(--rust);border-color:var(--rust)}button:disabled{opacity:.5;cursor:not-allowed}.nav button{min-width:0;white-space:normal;line-height:1.2;font-size:.84rem}
+.panel,.card{border:1px solid var(--line);background:var(--card);border-radius:18px;padding:19px;margin:13px 0;box-shadow:0 5px 25px #3b302309}.card{padding:14px;border-radius:13px;box-shadow:none}.view[hidden]{display:none!important}h1{font-size:1.55rem;line-height:1.2;margin:0 0 12px}h2{font-size:1.22rem;color:var(--green);margin:16px 0 9px}h3{font-size:1.05rem;margin:7px 0}p{margin:8px 0 12px}label{display:block;font-weight:750;margin:11px 0 5px}input,textarea,select{font:inherit;width:100%;border:1px solid #d8d0c4;border-radius:11px;background:#fff;padding:11px;color:var(--ink)}textarea{min-height:105px;line-height:1.5}input[type=file]{padding:9px}input[type=checkbox]{width:auto}.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}.actions button,.actions .btn{font-size:.91rem}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.flexrow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.pill{display:inline-block;padding:4px 9px;border-radius:99px;background:#eff3eb;color:#3b5d40;font-size:.79rem;font-weight:800}.warn{background:#fff7e4;border:1px solid #f2e4c6;color:#6d512d;padding:13px;border-radius:13px}.status{padding:10px 12px;background:#edf2ec;border-radius:12px;font-weight:650;min-height:40px;white-space:pre-wrap}.status.error{background:#fff0ed;color:#8a3020}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,275px),1fr));gap:10px}.source{overflow-wrap:anywhere}.source a{word-break:break-word}.badge{font-size:.75rem;background:#eaf1e7;color:#305c37;padding:4px 8px;border-radius:8px}.badge.unverified{background:#f5ece3;color:#784e30}details{border:1px solid var(--line);border-radius:13px;padding:13px;margin:12px 0;background:#fdfbf8}summary{cursor:pointer;font-weight:700;color:var(--green)}.scenePic{width:min(100%,360px);aspect-ratio:9/16;background:#efe6d8;border:1px dashed #cbbda8;border-radius:18px;overflow:hidden;display:grid;place-items:center;margin:12px auto;color:var(--muted);text-align:center}.scenePic img{width:100%;height:100%;object-fit:cover}.rule{border:0;border-top:1px solid var(--line);margin:25px 0}.list{padding-left:21px}.list li{margin:5px 0}.helper{color:var(--muted);font-size:.87rem}.count{font-weight:800;color:var(--green)}#printArea{display:none}.videoCanvas{width:min(100%,270px);aspect-ratio:9/16;border-radius:12px;background:#181512;margin:auto;display:block}.spinner{opacity:.65}.ai-panel{border:1px solid #d8e5d6;background:#f7faf5;border-radius:14px;padding:13px;margin:15px 0}.ai-panel h2{margin:0 0 5px;font-size:1.1rem}.ai-panel .grid2{align-items:end}.ai-panel input{width:100%}#aiStatus{margin:11px 0 18px}.batchbar{width:100%;height:14px;accent-color:var(--green);margin:9px 0 4px}.batchbox{background:#f7faf5;border:1px solid #d8e5d6;padding:14px;border-radius:14px;margin:15px 0}
+@media(max-width:610px){.grid2{grid-template-columns:1fr}.head{padding:12px}.brand{font-size:1.12rem}.panel{padding:14px}.nav button{font-size:.75rem;padding:10px 5px}}@media print{body{background:#fff}main,.nav,.panel{display:none!important}#printArea{display:block;padding:15mm;color:#111;line-height:1.5}#printArea h1{font-size:25pt}#printArea h2{color:#153e2b}#printArea li{break-inside:avoid}}
+</style>
+</head>
+<body>
+<main>
+<header class="head"><div class="logo">🍅</div><div><div class="brand">Les recettes de Fafa</div><div class="muted tiny">Une seule application · Recherche, création, images, voix et TikTok</div><div class="tag">Studio unifié · brouillons restaurables</div></div></header>
+<nav class="nav" aria-label="Étapes de création"><button class="active" data-view="recherche">1. Recherche</button><button class="secondary" data-view="recettes">2. Recettes</button><button class="secondary" data-view="images">3. Images & voix</button><button class="secondary" data-view="montage">4. Vidéo</button></nav>
+<section class="view" id="view-recherche">
+ <div class="panel"><h1>Retrouver des recettes populaires</h1><p>Recherche des vidéos individuelles, compare leurs vues lorsqu'elles sont accessibles et choisis une idée pour créer ta propre version Fafa.</p>
+ <label for="searchQuery">Quel type de recette ?</label><input id="searchQuery" value="recettes familiales faciles" placeholder="Ex. poulet croustillant, tiramisu citron">
+ <div class="grid2"><div><label for="searchPlatform">Plateforme</label><select id="searchPlatform"><option value="youtube">YouTube</option><option value="tiktok">TikTok</option><option value="both">YouTube + TikTok</option></select></div><div><label for="searchPeriod">Période</label><select id="searchPeriod"><option value="all">Toutes les dates</option><option value="30">30 derniers jours</option><option value="365">12 derniers mois</option></select></div></div>
+ <div class="actions"><button id="youtubeRun">Vérifier les plus vues sur YouTube</button><a id="openYoutube" class="btn secondary" target="_blank" rel="noopener" href="https://www.youtube.com/">Ouvrir YouTube</a><a id="openTikTok" class="btn secondary" target="_blank" rel="noopener" href="https://www.tiktok.com/">Ouvrir TikTok</a></div>
+ <details><summary>Réglages facultatifs : clés API</summary><p class="helper">Aucune clé n'est intégrée au fichier ni enregistrée avec les recettes. Ne saisis que des clés limitées, sans facturation automatique. Une application HTML publique ne peut pas garantir la sécurité d'une clé API saisie dans le navigateur. Si tu as déjà partagé tes clés, révoque-les et crée-en de nouvelles.</p><label for="youtubeKey">YouTube Data API v3</label><input id="youtubeKey" type="password" autocomplete="off" placeholder="Clé personnelle YouTube"><label for="imageKey">Clé Agnès Images</label><input id="imageKey" type="password" autocomplete="off" placeholder="Clé Agnès image"><label style="display:flex;align-items:center;gap:8px"><input type="checkbox" id="rememberKeys"> Mémoriser les clés sur cet appareil</label><p class="helper">Attention : les clés mémorisées dans ce navigateur ne sont pas chiffrées. À utiliser uniquement sur un appareil personnel. Ne publie jamais un fichier contenant tes clés.</p><p class="helper">Sans clés, les liens YouTube/TikTok, le brief ChatGPT, les imports JSON, les photos importées, les voix du téléphone et les exports locaux restent utilisables.</p></details>
+ <div class="warn"><strong>Fiabilité :</strong> « les plus vues » signifie les plus vues parmi les vidéos retournées par cette recherche, et non un classement exhaustif de la plateforme. Le titre et le compteur d'une vidéo ne révèlent pas ses ingrédients. Les recettes créées à partir d'un titre sont des adaptations originales, pas des transcriptions.</div>
+ <p id="searchStatus" class="status" role="status">Recherche prête. Pour obtenir les compteurs YouTube exacts, ajoute ta clé facultative.</p></div>
+ <div class="panel"><div class="flexrow"><h2>Vidéos retrouvées</h2><span id="resultsCount" class="pill">0 vidéo</span></div><div id="searchResults" class="cards"></div><hr class="rule"><h2>Ajouter une vidéo TikTok ou YouTube manuellement</h2><p class="helper">Les vues saisies ici restent « rapportées / non vérifiées », même si tu les as vues sur une capture.</p><label for="manualUrl">URL exacte de la vidéo</label><input id="manualUrl" placeholder="https://www.tiktok.com/@.../video/... ou https://www.youtube.com/watch?v=..."><label for="manualTitle">Titre du plat</label><input id="manualTitle" placeholder="Ex. nouilles au poulet croustillant"><div class="grid2"><div><label for="manualCreator">Créateur</label><input id="manualCreator" placeholder="Nom du compte"></div><div><label for="manualViews">Vues (facultatif)</label><input id="manualViews" type="number" min="0" placeholder="Non indiqué"></div></div><div class="actions"><button id="manualAdd">Ajouter cette vidéo</button></div></div>
+</section>
+<section class="view" id="view-recettes" hidden>
+ <div class="panel"><h1>Créer ou importer la recette</h1><p>Une vidéo repérée sert d'inspiration. Si les quantités et étapes exactes ne sont pas disponibles, l'application ne les présente jamais comme vérifiées.</p><label for="recipeIdea">Ton idée de plat</label><input id="recipeIdea" placeholder="Ex. gratin de courgettes, tiramisu citron"><p id="draftStatus" class="pill">Sauvegarde automatique activée</p><p class="helper">Même si tu quittes la page pour copier un prompt dans ChatGPT ou DeepSeek, ce brouillon sera restauré au retour sur le même appareil, navigateur et adresse. Un fichier HTML local (Acode) et un site web ne partagent pas forcément leurs données. Utilise « Sauvegarder le lot JSON » pour une copie indépendante.</p><div class="ai-panel" id="aiPanel"><h2>Génération automatique avec ton IA</h2><p class="helper">Cette fonction utilise une <strong>clé API Mistral ou Agnès valide</strong>. L’abonnement ChatGPT ne fournit pas de clé pour cette fonction. Une clé ne garantit pas que le navigateur autorise la connexion.</p><div class="grid2"><label for="textProvider">Fournisseur pour créer la recette</label><select id="textProvider"><option value="mistral">Mistral</option><option value="agnes">Agnès</option></select><label for="textKey">Clé IA texte</label><input id="textKey" type="password" autocomplete="off" placeholder="Clé Mistral ou Agnès"></div><p class="helper" id="keyHint">Sélectionne Mistral ou Agnès, puis saisis la clé correspondant au fournisseur choisi. Pour la conserver après fermeture, active « Mémoriser les clés » dans les réglages de recherche.</p></div><div class="actions"><button id="prepareIdea">Préparer le brief</button><button id="generateAI">Générer via mon IA (facultatif)</button></div><p id="aiStatus" class="status" role="status" aria-live="polite">Génération IA : renseigne la clé ci-dessus pour essayer. Sinon, utilise « Préparer le brief » puis « Copier le brief ».</p><label for="recipePrompt">Brief à coller dans ChatGPT ou DeepSeek</label><textarea id="recipePrompt" rows="7"></textarea><div class="actions"><button id="copyRecipePrompt" class="secondary">Copier le brief</button><a href="https://chatgpt.com/" class="btn secondary" target="_blank" rel="noopener">Ouvrir ChatGPT</a></div><label for="recipeJson">Colle ici la réponse JSON de ChatGPT ou DeepSeek</label><textarea id="recipeJson" rows="8" placeholder='{"recipe":{"title":"...","ingredients":["..."],"steps":[{"title":"...","action":"..."}]},"storyboard":[...]}'></textarea><div class="actions"><button id="importRecipe">Importer dans mon lot</button><button id="downloadAll" class="secondary">Sauvegarder le lot JSON</button><button id="downloadProject" class="secondary">Sauvegarder mon travail (JSON)</button><label class="btn secondary" style="margin:0;cursor:pointer" for="restoreProject">Restaurer mon travail</label><input style="display:none" type="file" id="restoreProject" accept=".json,application/json"><label class="btn secondary" style="margin:0;cursor:pointer" for="uploadJson">Charger un JSON</label><input style="display:none" type="file" id="uploadJson" accept=".json,application/json"></div><p id="recipeStatus" class="status" role="status">Tu peux travailler jusqu'à 10 recettes dans le même lot.</p></div>
+ <div class="panel"><div class="flexrow"><h2>Mes recettes du jour</h2><span id="recipeCount" class="pill">0 / 10</span></div><div id="recipeList"></div><div class="actions"><button id="printRecipe" class="secondary">Imprimer / enregistrer en PDF</button><button id="downloadPrompts" class="secondary">Tous les prompts (.txt)</button></div></div>
+</section>
+<section class="view" id="view-images" hidden>
+ <div class="panel"><h1>Photographies et voix</h1><p>Les photos sont toutes distinctes et suivent les mêmes ustensiles, le même plan de travail et la même gazinière. Tu peux utiliser tes propres images, même sans service payant.</p><label for="imageRecipe">Choisir une recette</label><select id="imageRecipe"></select><div class="batchbox" id="consistencyBox"><h2>Le même plat dans toute la recette</h2><p class="helper">Tu as corrigé tes prompts pour garder le même plat allant au four. Décris ici son apparence exacte : cette règle sera ajoutée à toutes les nouvelles générations, y compris aux prompts déjà retouchés. Les photos existantes ne sont pas modifiées.</p><label for="dishContinuity">Récipient de cuisson à conserver (forme, couleur, matériau…)</label><textarea id="dishContinuity" rows="2" placeholder="Ex. même plat rectangulaire en céramique blanche, rebords droits, deux poignées : identique des étapes de préparation au plan final"></textarea><p class="helper">Dans les plans de cuisson et de présentation du plat terminé : ni assiette de service, ni autre moule, ni autre plat. Les petits bols pour les ingrédients restent possibles.</p><p id="consistencyStatus" class="status" role="status">Cette consigne s'appliquera aux nouvelles photos et à l'export des scripts.</p></div><label for="imageScene">Choisir une scène</label><select id="imageScene"></select><div class="flexrow"><span id="photoProgress" class="pill">0 photo</span><span id="sceneDuration" class="pill">5 s / scène</span></div><div id="scenePreview" class="scenePic">Aucune photo pour cette scène.</div><label for="uploadPhoto">Importer une vraie photo</label><input id="uploadPhoto" type="file" accept="image/png,image/jpeg,image/webp"><label for="uploadManyPhotos">Récupérer plusieurs anciennes photos en une fois</label><input id="uploadManyPhotos" type="file" accept="image/png,image/jpeg,image/webp" multiple><p class="helper">Compatible avec les noms « fafa-00.png » (scène 1), « fafa-01.png » (scène 2), ou les noms du ZIP « fafa-scene-01.png ». Les photos déjà présentes ne sont pas écrasées.</p><div class="actions"><button id="generatePhoto">Générer cette photo (Agnès)</button><button id="nextScene" class="secondary">Scène suivante</button><button id="savePhoto" class="secondary">Télécharger la photo</button></div><div class="batchbox"><h2>Créer toutes les photos automatiquement</h2><p class="helper">Une seule pression : Agnès crée les images des scènes manquantes, une à une, et les enregistre dans ce navigateur. Tu peux interrompre et reprendre. Les images déjà présentes ne sont pas remplacées.</p><div class="actions"><button id="generateAllPhotos">Générer toutes les photos manquantes</button><button id="stopPhotoBatch" class="secondary" disabled>Arrêter</button><button id="downloadPhotosZip" class="secondary">Télécharger les photos en ZIP</button></div><progress id="photoBatchProgress" class="batchbar" max="1" value="0"></progress><p id="photoBatchStatus" class="status" role="status" aria-live="polite">Prêt à générer les images manquantes.</p><p class="helper">Chaque image utilise un appel API Agnès qui peut consommer des crédits ou être facturé selon ton compte. Une confirmation est demandée avant le lancement. Garde la page ouverte et l’écran actif pendant la génération.</p></div><label for="photoPrompt">Prompt de l'image (modifiable)</label><textarea id="photoPrompt" rows="6"></textarea><label for="sceneVisualNote">Ce qui apparaît vraiment sur cette photo (facultatif)</label><textarea id="sceneVisualNote" rows="2" placeholder="Ex. le poulet est encore cru dans le plat à four ; aucun dressage sur assiette"></textarea><p class="helper">Cette note permet de corriger les 20 narrations à partir de ce que tu constates sur les photos. L’IA texte ne voit pas automatiquement les photos.</p><div class="actions"><button id="copyPhotoPrompt" class="secondary">Copier le prompt photo</button></div><hr class="rule"><h2>Voix off française facultative</h2><p class="helper">Voix installées sur ton appareil, débit 1,10×. L'écoute ne crée pas de fichier audio MP3.</p><label for="voiceChoice">Voix disponible</label><select id="voiceChoice"></select><label for="voiceText">Narration de cette scène</label><textarea id="voiceText" rows="3"></textarea><div class="actions"><button id="speak">Écouter</button><button id="stopSpeech" class="secondary">Arrêter</button><button id="saveNarration" class="secondary">Enregistrer cette phrase</button><button id="downloadSrt" class="secondary">Télécharger SRT</button></div><div class="batchbox" id="voiceBatchBox">
+<h2>Toutes les voix off et scripts en une fois</h2>
+<p class="helper">Tes scènes ont déjà leurs textes. Prépare un ZIP comprenant les 20 narrations, les scripts de tournage, les prompts photo et les sous-titres SRT. Aucun crédit IA nécessaire.</p>
+<p class="helper">Après avoir rectifié les prompts et indiqué le récipient commun, tu peux harmoniser toutes les voix off avec ces modifications. L’application utilise ta clé Mistral ou Agnès (onglet Recettes), sur confirmation. Elle se base sur les prompts et tes observations, et non sur une analyse réelle des pixels.</p><div class="actions"><button id="syncNarrations">Adapter les 20 narrations aux photos et prompts corrigés</button><button id="undoNarrations" class="secondary">Annuler la dernière adaptation</button></div><div class="actions"><button id="exportAllScripts">Télécharger tous les scripts + SRT (ZIP)</button><button id="copyAllNarrations" class="secondary">Copier les 20 voix off</button><button id="playAllVoices" class="secondary">Écouter les 20 à la suite</button><button id="stopAllVoices" class="secondary" disabled>Arrêter la lecture</button></div>
+<details><summary>Obtenir aussi les 20 vrais fichiers audio MP3 (ElevenLabs)</summary>
+<p class="helper">Option facultative : nécessite une clé API ElevenLabs et des crédits disponibles. Ce n'est pas la voix Android : les MP3 sont réels, téléchargeables et prêts pour CapCut. L'application n'enregistre jamais cette clé sur l'appareil.</p>
+<label for="elevenKey">Ma clé API ElevenLabs</label><input id="elevenKey" type="password" autocomplete="off" placeholder="Clé API ElevenLabs (non enregistrée)">
+<div class="actions"><button id="loadElevenVoices" class="secondary">Afficher mes voix ElevenLabs</button></div>
+<label for="elevenVoice">Choisir la voix</label><select id="elevenVoice"><option value="">Charger mes voix ci-dessus</option></select>
+<label for="elevenVoiceId">Ou saisir l'identifiant de ma voix</label><input id="elevenVoiceId" autocomplete="off" placeholder="Voice ID (facultatif si voix choisie)">
+<p class="helper">Si ta voix « Anaïs – Instructor » est disponible sur ton compte, choisis-la dans la liste. L'outil génère les scènes successivement, garde les MP3 réussis, permet de reprendre après interruption et les rassemble en ZIP.</p>
+<div class="actions"><button id="generateAllAudio">Générer tous les MP3</button><button id="stopAudioBatch" class="secondary" disabled>Arrêter</button><button id="downloadAudioZip" class="secondary">Télécharger les MP3 déjà prêts</button></div>
+<progress class="batchbar" id="audioBatchProgress" value="0" max="1"></progress>
+</details>
+<p id="voiceBatchStatus" class="status" aria-live="polite" role="status">Prêt pour les scripts et les voix off de la recette sélectionnée.</p>
+<p class="helper">Un fichier HTML ouvert dans un autre navigateur peut avoir un stockage différent. Télécharge tes scripts et tes MP3 en ZIP avant de changer de fichier ou d'appareil.</p>
+</div><p id="imageStatus" class="status" role="status">Les photos sont conservées localement dans ce navigateur quand le stockage le permet. Télécharge-les également par sécurité.</p></div>
+</section>
+<section class="view" id="view-montage" hidden>
+ <div class="panel"><h1>Préparer ta vidéo TikTok</h1><p>Montage de photos verticales 9:16 avec léger zoom et textes lisibles. Pour des gestes de cuisine réellement animés, utilise des séquences vidéo dans CapCut ou un outil adapté.</p><label for="movieRecipe">Recette à exporter</label><select id="movieRecipe"></select><div id="movieInfo" class="warn"></div><canvas id="previewCanvas" class="videoCanvas" width="540" height="960"></canvas><div class="actions"><button id="previewMovie">Aperçu du premier plan</button><button id="exportMovie">Exporter vidéo silencieuse</button><button id="downloadCaption" class="secondary">Légende + hashtags</button></div><p class="helper">La vidéo est enregistrée en MP4 si ton navigateur sait le faire, sinon en WebM. L'export est effectué en temps réel (environ 100 s pour 20 scènes), sans voix ni musique. Garde cette page ouverte pendant l'export.</p><p id="movieStatus" class="status" role="status">Ajoute une recette avec 20 scènes et une image par scène pour exporter.</p><hr class="rule"><h2>Derniers réglages dans CapCut</h2><p class="helper">Ajoute une musique tendance, des sons de cuisine ou une voix off, vérifie les transitions, puis publie la vidéo en mentionnant l'utilisation d'images générées par IA si nécessaire. Ne réutilise pas la vidéo source d'un créateur sans autorisation.</p></div>
+</section>
+</main><div id="printArea"></div>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),ESC=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const STORAGE='fafa-studio-unique-v1',DRAFT_KEY='fafa-studio-draft-v2',KEYS_KEY='fafa-studio-keys-v2';let recipes=[],videos=[],activeSource=null,activeView='recherche',currentId=null,currentScene=0,recording=false;
+const images=new Map();let db=null;let voice=window.speechSynthesis||null;
+// Sauvegardes distinctes : recettes, brouillon de travail, et clés uniquement sur demande.
+const DRAFT_FIELDS=['searchQuery','searchPlatform','searchPeriod','manualUrl','manualTitle','manualCreator','manualViews','recipeIdea','recipePrompt','recipeJson'];
+const KEY_FIELDS=['youtubeKey','textProvider','textKey','imageKey'];
+function saveDraft(){
+  const draft={};for(const id of DRAFT_FIELDS)draft[id]=$(id)?.value??'';
+  draft.activeSource=activeSource;draft.videos=videos;draft.updatedAt=new Date().toISOString();
+  try{localStorage.setItem(DRAFT_KEY,JSON.stringify(draft));
+    $('draftStatus').textContent='Brouillon enregistré automatiquement · '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){$('draftStatus').textContent='Stockage du brouillon impossible : exporte ton JSON';}
+}
+function restoreDraft(){
+  try{const draft=JSON.parse(localStorage.getItem(DRAFT_KEY)||'null');if(!draft||typeof draft!=='object')return;
+    for(const id of DRAFT_FIELDS)if(typeof draft[id]==='string')$(id).value=draft[id];
+    activeSource=draft.activeSource||null;videos=Array.isArray(draft.videos)?draft.videos.slice(0,12):[];
+    $('draftStatus').textContent='Brouillon retrouvé sur cet appareil';renderVideos();linkRefresh();
+  }catch(e){$('draftStatus').textContent='Brouillon illisible : utilise un fichier JSON de sauvegarde';}
+}
+function saveKeys(){
+  try{if(!$('rememberKeys').checked){localStorage.removeItem(KEYS_KEY);return;}
+    const keys={};for(const id of KEY_FIELDS)keys[id]=$(id).value;
+    localStorage.setItem(KEYS_KEY,JSON.stringify(keys));
+  }catch(e){message('searchStatus','Enregistrement local des clés impossible. Elles resteront actives uniquement jusqu’à la fermeture.',true);}
+}
+function restoreKeys(){
+  try{const raw=localStorage.getItem(KEYS_KEY);if(!raw)return;
+    const keys=JSON.parse(raw);if(!keys||typeof keys!=='object')return;
+    for(const id of KEY_FIELDS)if(typeof keys[id]==='string')$(id).value=keys[id];
+    $('rememberKeys').checked=true;
+  }catch(e){localStorage.removeItem(KEYS_KEY);}
+}
+function persistScene(){
+  const r=recipes.find(x=>x.id===currentId),scene=r?.scenes?.[currentScene];if(!scene)return;
+  // Ne modifie une scène que si ses champs ont déjà été chargés dans l'éditeur.
+  if($('imageScene').value!==String(currentScene)||$('imageRecipe').value!==currentId)return;
+  scene.voiceOver=$('voiceText').value;
+  scene.editedImagePrompt=$('photoPrompt').value;
+  scene.visualNote=$('sceneVisualNote').value;
+  save();
+}
+for(const id of DRAFT_FIELDS)$(id).addEventListener('input',saveDraft);
+$('searchPlatform').addEventListener('change',saveDraft);
+$('searchPeriod').addEventListener('change',saveDraft);
+for(const id of KEY_FIELDS)$(id).addEventListener('input',saveKeys);
+$('textProvider').addEventListener('change',saveKeys);
+$('rememberKeys').addEventListener('change',saveKeys);
+window.addEventListener('pagehide',()=>{persistScene();saveDraft();saveKeys()});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){persistScene();saveDraft();saveKeys()}});
+
+function message(id,text,error=false){const el=$(id);el.textContent=text;el.classList.toggle('error',error)}
+function save(){try{localStorage.setItem(STORAGE,JSON.stringify({recipes,currentId,currentScene,activeView}))}catch{message('recipeStatus','Le téléphone manque de place. Télécharge le lot JSON.',true)}}
+function restore(){try{const v=JSON.parse(localStorage.getItem(STORAGE)||'{}');recipes=Array.isArray(v.recipes)?v.recipes:[];currentId=v.currentId||recipes[0]?.id||null;currentScene=Number.isInteger(v.currentScene)?v.currentScene:0;activeView=['recherche','recettes','images','montage'].includes(v.activeView)?v.activeView:'recherche'}catch{recipes=[]}}
+function show(v){persistScene();saveDraft();activeView=v;save();document.querySelectorAll('.view').forEach(el=>el.hidden=el.id!=='view-'+v);document.querySelectorAll('[data-view]').forEach(b=>{const on=b.dataset.view===v;b.classList.toggle('active',on);b.classList.toggle('secondary',!on)});if(v==='images')updateImagesUI();if(v==='montage')updateMovieUI();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.view)));
+function linkRefresh(){const q=$('searchQuery').value.trim();$('openYoutube').href='https://www.youtube.com/results?search_query='+encodeURIComponent(q);$('openTikTok').href='https://www.tiktok.com/search?q='+encodeURIComponent(q)}
+$('searchQuery').addEventListener('input',linkRefresh);linkRefresh();
+function properVideo(raw){try{const u=new URL(raw);const h=u.hostname.toLowerCase();if(u.protocol!=='https:'||!(['youtube.com','www.youtube.com','m.youtube.com','youtu.be','www.tiktok.com','tiktok.com','m.tiktok.com'].includes(h)))return '';return u.toString()}catch{return ''}}
+function safeN(n){return typeof n==='number'&&Number.isFinite(n)?new Intl.NumberFormat('fr-FR').format(n):'indisponibles'}
+function renderVideos(){const host=$('searchResults');host.replaceChildren();$('resultsCount').textContent=videos.length+' vidéo(s)';videos.forEach((v,i)=>{const div=document.createElement('div');div.className='card source';const date=v.checkedAt?new Date(v.checkedAt).toLocaleString('fr-FR'):'non relevée';div.innerHTML='<div class="flexrow"><span class="pill">'+ESC(v.platform)+'</span><span class="badge '+(v.verified?'':'unverified')+'">'+(v.verified?'Vues API vérifiées':'Vues non vérifiées')+'</span></div><h3>'+ESC(v.title)+'</h3><p class="tiny muted">'+ESC(v.creator||'Créateur inconnu')+' · '+ESC(v.publishedAt||'Publication inconnue')+'</p><p class="tiny">'+safeN(v.views)+' vues · relevé '+ESC(date)+'</p><p class="tiny muted">'+ESC(v.note||'')+'</p><div class="actions"><a class="btn secondary" target="_blank" rel="noopener" href="'+ESC(v.url)+'">Voir la vidéo</a><button data-source="'+i+'">Créer une version Fafa</button></div>';host.append(div)});host.querySelectorAll('[data-source]').forEach(b=>b.addEventListener('click',()=>{activeSource=videos[Number(b.dataset.source)];$('recipeIdea').value=activeSource.title;preparePrompt();show('recettes')}))}
+$('youtubeRun').addEventListener('click',async()=>{const key=$('youtubeKey').value.trim(),q=$('searchQuery').value.trim();if(!key){message('searchStatus','Sans clé YouTube Data API, utilise les liens YouTube/TikTok ou importe une vidéo manuellement.',true);return}if(!q){message('searchStatus','Indique une recherche.',true);return}const button=$('youtubeRun');button.disabled=true;message('searchStatus','Recherche de vidéos YouTube et vérification de leurs compteurs exacts…');try{const d=new Date();d.setUTCDate(d.getUTCDate()-Number($('searchPeriod').value||0));const after=$('searchPeriod').value==='all'?'':'&publishedAfter='+encodeURIComponent(d.toISOString());const root='https://www.googleapis.com/youtube/v3/';const s=await fetch(root+'search?part=snippet&type=video&order=viewCount&maxResults=25&q='+encodeURIComponent(q+' recette cuisine')+after+'&key='+encodeURIComponent(key));const sJ=await s.json().catch(()=>({}));if(!s.ok)throw Error(sJ.error?.message||s.status);const ids=(sJ.items||[]).map(v=>v.id?.videoId).filter(Boolean);if(!ids.length)throw Error('Aucune vidéo trouvée.');const v=await fetch(root+'videos?part=snippet,statistics&id='+encodeURIComponent(ids.join(','))+'&key='+encodeURIComponent(key));const vJ=await v.json().catch(()=>({}));if(!v.ok)throw Error(vJ.error?.message||v.status);const checkedAt=new Date().toISOString();videos=(vJ.items||[]).map(x=>({id:x.id,platform:'YouTube',title:x.snippet?.title||'Vidéo',creator:x.snippet?.channelTitle||'Non indiqué',publishedAt:x.snippet?.publishedAt?x.snippet.publishedAt.slice(0,10):null,views:x.statistics?.viewCount===undefined?null:Number(x.statistics.viewCount),verified:x.statistics?.viewCount!==undefined,checkedAt,url:'https://www.youtube.com/watch?v='+x.id,note:'Statistiques exactes de cette vidéo, sans accès garanti à ses ingrédients ou sa transcription.'})).sort((a,b)=>(b.views??-1)-(a.views??-1)).slice(0,10);renderVideos();message('searchStatus',videos.length+' résultats YouTube classés par leurs vues relevées via l’API au '+new Date(checkedAt).toLocaleString('fr-FR')+'. Classement non exhaustif.')}catch(e){message('searchStatus','Recherche indisponible : '+e.message,true)}finally{button.disabled=false}});
+$('manualAdd').addEventListener('click',()=>{const url=properVideo($('manualUrl').value),title=$('manualTitle').value.trim();if(!url||!title){message('searchStatus','Renseigne le lien YouTube ou TikTok exact et un titre.',true);return}const views=$('manualViews').value.trim();videos.unshift({platform:url.includes('tiktok')?'TikTok':'YouTube',title,creator:$('manualCreator').value.trim(),views:views===''?null:Number(views),verified:false,checkedAt:null,publishedAt:null,url,note:'Vues indiquées manuellement, non vérifiées par API.'});videos=videos.slice(0,12);renderVideos();message('searchStatus','Vidéo ajoutée. Le compteur est signalé comme non vérifié.')});
+function originalPrompt(){const t=$('recipeIdea').value.trim()||$('searchQuery').value.trim()||'recette familiale';const source=activeSource?'Titre de la vidéo : '+activeSource.title+' ; auteur : '+activeSource.creator+' ; URL : '+activeSource.url+'. La vidéo n’a pas été visionnée/transcrite.':'Thème : '+t+'.';return 'Tu crées une recette culinaire ORIGINALE pour « Les recettes de Fafa ». '+source+'\nNE PRÉTENDS JAMAIS connaître les ingrédients, quantités ou gestes du créateur. Ne reproduis aucune vidéo ni aucun texte. Propose ta propre recette inspirée uniquement du thème. Sans porc ni alcool ; 4 personnes. Donne des quantités et étapes précises pour TA version originale.\nRéponds uniquement en JSON valide sous la forme : {"recipe":{"title":"...","hook":"...","servings":4,"prepTime":"...","cookTime":"...","sourceNote":"Recette originale inspirée du thème. Ingrédients de la vidéo source non vérifiés.","ingredients":["250 g de ..."],"steps":[{"number":1,"title":"...","action":"..."}]},"storyboard":[{"number":1,"title":"...","caption":"...","imagePrompt":"...","voiceOver":"...","durationSeconds":5}]}\nAu moins 20 scènes distinctes : 1 plat terminé, 2 ingrédients, puis progression de la préparation, cuisson, dressage et plan final. Photos 9:16, MAINTIEN DU MÊME DÉCOR : plan de travail en bois clair, crédence marbre clair, gazinière inox, wok noir constant, lumière gauche, mains seulement, aucun troisième bras ni ustensile flottant. Gestes possibles et continuité des ingrédients. Voix française féminine naturelle, phrases courtes, débit 1,10×. Objectif vidéo > 60 secondes.'}
+function preparePrompt(){$('recipePrompt').value=originalPrompt();saveDraft();message('recipeStatus','Brief prêt. Colle-le dans ChatGPT/DeepSeek ; colle ensuite le JSON obtenu pour importer la recette.')}
+$('recipeIdea').addEventListener('input',()=>{activeSource=null;saveDraft()});$('prepareIdea').addEventListener('click',preparePrompt);$('copyRecipePrompt').addEventListener('click',async()=>{if(!$('recipePrompt').value)preparePrompt();await copyText($('recipePrompt').value,'recipeStatus')});
+async function copyText(t,status){try{await navigator.clipboard.writeText(t);message(status,'Texte copié.')}catch{message(status,'Copie bloquée : sélectionne le texte et copie-le manuellement.',true)}}
+function normalizeIngredients(v){if(Array.isArray(v))return v.map(x=>typeof x==='string'?x:[x.quantity||x.amount||'',x.name||x.ingredient||''].filter(Boolean).join(' ')).filter(Boolean);return []}
+function normalizeSteps(v){if(typeof v==='string')return [{title:'Préparation',action:v}];if(!Array.isArray(v))return [];return v.map((x,i)=>typeof x==='string'?{title:'Étape '+(i+1),action:x}:{title:x.title||'Étape '+(i+1),action:x.action||x.description||x.text||''}).filter(x=>x.action)}
+function isOvenRecipe(rec){return /\b(four|enfourner|fourne|gratin|rôti|rôtir|roti|roast|bake|plat à four)\b/i.test([rec.title,...(rec.steps||[]).map(s=>s.action||'')].join(' '))}
+function consistentPrompt(rec,s){
+  const ing=rec.ingredients.join(', ');
+  const tool=rec.dishContinuity?.trim() ? 'Utiliser le récipient constant indiqué pour la recette : '+rec.dishContinuity.trim()+'.' : isOvenRecipe(rec)?'Pour la cuisson et le plan final, utiliser TOUJOURS le même plat allant au four, jamais une assiette ou un autre plat.':'Même wok noir pour les scènes qui nécessitent un wok.';
+  return 'Photo culinaire ultra-réaliste verticale 9:16. Toujours la même cuisine : plan de travail bois clair, crédence marbre clair, gazinière inox à brûleurs identiques, lumière naturelle à gauche. '+tool+' Seulement des mains humaines si le geste le demande, aucun visage, bras supplémentaire ni objet flottant. Ingrédients EXCLUSIVEMENT : '+ing+'. Scène : '+(s.action||s.caption||s.title||'')+'. Respect exact de la cuisson et des ustensiles. Aucune écriture ni collage.'
+}
+function fallbackScenes(rec){const steps=rec.steps;const arr=[];arr.push({title:'Accroche : plat fini',action:'Gros plan très gourmand sur le plat fini : '+rec.title,caption:'Tu vas adorer cette recette !',voiceOver:'Voici '+rec.title+', une idée gourmande à refaire.',durationSeconds:5});arr.push({title:'Tous les ingrédients',action:'Vue à plat, ingrédients préparés et pesés : '+rec.ingredients.join(', '),caption:'Les ingrédients',voiceOver:'On prépare tous les ingrédients.',durationSeconds:5});for(let i=0;i<16;i++){const k=Math.min(steps.length-1,Math.floor(i*steps.length/16));const st=steps[k];arr.push({title:(i%2?'Détail : ':'Préparation : ')+st.title,action:st.action,caption:st.title,voiceOver:st.action,durationSeconds:5})}arr.push({title:'Dressage final',action:'Présentation du plat terminé selon les étapes indiquées, sans ajout d’ingrédient.',caption:'Le dressage',voiceOver:'On passe au dressage.',durationSeconds:5});arr.push({title:'Texture et service',action:'Gros plan final sur le plat servi, cohérent avec les étapes.',caption:'À table !',voiceOver:'Et voilà, bon appétit !',durationSeconds:5});return arr}
+function cleanJson(txt){const raw=String(txt||'').trim().replace(/^```(?:json)?\s*/i,'').replace(/```\s*$/,'');try{return JSON.parse(raw)}catch{const a=raw.indexOf('{'),b=raw.lastIndexOf('}');if(a!==-1&&b>a)return JSON.parse(raw.slice(a,b+1));throw Error('JSON invalide')}}
+function rowsFromJson(obj){if(Array.isArray(obj))return obj;if(Array.isArray(obj.recipes))return obj.recipes;if(Array.isArray(obj.recipePacks))return obj.recipePacks;return [obj]}
+function addRows(raw){const rows=rowsFromJson(raw),newItems=[];if(recipes.length+rows.length>10)throw Error('Lot limité à 10 recettes : exporte une sauvegarde avant de commencer un nouveau lot.');for(const row of rows){const r=row.recipe||row.selectedRecipe||row.recette||row;const ing=normalizeIngredients(r.ingredients),steps=normalizeSteps(r.steps||r.instructions||r.preparation);if(!r.title||!ing.length||!steps.length)throw Error('Recette sans titre, ingrédients ou étapes utilisables.');const rec={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random()),title:String(r.title),hook:r.hook||'',servings:r.servings||4,prepTime:r.prepTime||'non précisé',cookTime:r.cookTime||'non précisé',sourceNote:r.sourceNote||'',source:r.source||null,ingredients:ing,steps,scenes:[]};if(activeSource&&!rec.source){rec.source={url:activeSource.url,title:activeSource.title,creator:activeSource.creator,platform:activeSource.platform,views:activeSource.views,viewsVerified:activeSource.verified,viewsCheckedAt:activeSource.checkedAt};rec.sourceNote='Recette originale inspirée du titre seulement. Ingrédients et gestes de la vidéo source non vérifiés. '+rec.sourceNote}const sourceScenes=row.storyboard||row.scenes||r.storyboard||[];rec.scenes=Array.isArray(sourceScenes)&&sourceScenes.length>=20?sourceScenes.map((s,i)=>({number:i+1,title:s.title||'Scène '+(i+1),action:s.action||s.caption||'',caption:s.caption||s.title||'',imagePrompt:s.imagePrompt||'',voiceOver:s.voiceOver||s.voixOff||s.narration||s.caption||'',durationSeconds:5})):fallbackScenes(rec);newItems.push(rec)}recipes.push(...newItems);currentId=newItems[0].id;currentScene=0;save();saveDraft();renderRecipes();updateSelects();message('recipeStatus',newItems.length+' recette(s) importée(s) avec au moins 20 scènes chacune. Si le storyboard était trop court, une trame de 20 scènes a été préparée à partir des étapes : vérifie et personnalise ses plans.');return newItems}
+$('importRecipe').addEventListener('click',()=>{try{addRows(cleanJson($('recipeJson').value));show('images')}catch(e){message('recipeStatus','Import impossible : '+e.message,true)}});
+$('uploadJson').addEventListener('change',async e=>{try{const file=e.target.files?.[0];if(!file)return;addRows(cleanJson(await file.text()))}catch(err){message('recipeStatus','Fichier invalide : '+err.message,true)}});
+function aiKeyInfo(){
+  const provider=$('textProvider').value==='agnes'?'Agnès':'Mistral';
+  const key=$('textKey').value.trim();
+  $('keyHint').textContent=key?'Clé '+provider+' renseignée sur cet appareil (connexion non encore vérifiée). Pour la sauvegarder, active « Mémoriser les clés » dans Recherche > Réglages.':'Aucune clé IA texte renseignée. Choisis ton fournisseur et colle sa clé ici. Une clé Agnès Images ne remplit pas automatiquement ce champ.';
+}
+$('textKey').addEventListener('input',aiKeyInfo);
+$('textProvider').addEventListener('change',aiKeyInfo);
+function errorFromApi(status,data){
+  const err=data?.error;
+  const detail=typeof err==='string'?err:(err?.message||data?.message||'');
+  if(status===401)return 'Clé API refusée (401). Vérifie la clé et le fournisseur sélectionné. '+detail;
+  if(status===403)return 'Accès interdit (403) : autorisation, origine ou quota du compte à vérifier. '+detail;
+  if(status===429)return 'Quota ou limite de requêtes atteint (429). Réessaie plus tard ou consulte ton compte API. '+detail;
+  if(status===402)return 'Crédits API insuffisants (402). Aucun paiement n’est effectué par cette application. '+detail;
+  if(status===400||status===422)return 'Requête non acceptée ('+status+') : '+(detail||'modèle, paramètres ou format de réponse non pris en charge');
+  return 'Erreur API '+status+(detail?' : '+detail:'');
+}
+async function aiText(prompt){
+  const key=$('textKey').value.trim(),provider=$('textProvider').value;
+  if(!key)throw Error('Aucune clé IA texte. Renseigne-la juste au-dessus de « Générer via mon IA ».');
+  const url=provider==='mistral'?'https://api.mistral.ai/v1/chat/completions':'https://apihub.agnes-ai.com/v1/chat/completions';
+  const body={model:provider==='mistral'?'mistral-small-latest':'agnes-2.5-flash',messages:[{role:'user',content:prompt}],temperature:0.4,max_tokens:6500,stream:false};
+  // JSON mode is documented by Mistral; Agnes accepts OpenAI-style calls but the JSON option is not guaranteed.
+  if(provider==='mistral')body.response_format={type:'json_object'};
+  const controller=new AbortController(),deadline=setTimeout(()=>controller.abort(),90000);
+  let r;
+  try{
+    r=await fetch(url,{method:'POST',headers:{Authorization:'Bearer '+key,'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal});
+  }catch(err){
+    if(err.name==='AbortError')throw Error('Délai de 90 secondes dépassé : le service ne répond pas.');
+    throw Error('Connexion API impossible : navigateur, réseau ou blocage CORS. Un fichier HTML ne peut pas contourner un refus CORS. Utilise le brief avec ChatGPT/DeepSeek en attendant.');
+  }finally{clearTimeout(deadline)}
+  const raw=await r.text();let data={};try{data=JSON.parse(raw)}catch{}
+  if(!r.ok)throw Error(errorFromApi(r.status,data));
+  let content=data?.choices?.[0]?.message?.content;
+  if(Array.isArray(content))content=content.map(part=>part.text||'').join('');
+  if(!content && data?.output_text)content=data.output_text;
+  if(!content)throw Error('Réponse vide ou format de réponse inattendu. Vérifie le service et le modèle API.');
+  try{return cleanJson(content)}catch(err){
+    $('recipeJson').value=String(content);saveDraft();
+    throw Error('L’IA a répondu, mais son JSON est incomplet ou invalide. Son texte a été conservé dans la zone de réponse pour récupération.');
+  }
+}
+$('generateAI').addEventListener('click',async()=>{
+  // Never destroy an already prepared or edited prompt when retrying generation.
+  if(!$('recipePrompt').value.trim())preparePrompt();
+  const b=$('generateAI'),provider=$('textProvider').value==='agnes'?'Agnès':'Mistral';
+  if(!$('textKey').value.trim()){
+    const msg='Clé '+provider+' manquante : renseigne le champ « Clé IA texte » ci-dessus. Sinon, clique sur « Copier le brief » et utilise ChatGPT ou DeepSeek.';
+    message('aiStatus',msg,true);message('recipeStatus',msg,true);$('textKey').focus();return;
+  }
+  b.disabled=true;b.textContent='Génération en cours…';
+  message('aiStatus','Connexion à '+provider+' en cours… Patiente et garde cette page ouverte.');
+  try{
+    const obj=await aiText($('recipePrompt').value);
+    $('recipeJson').value=JSON.stringify(obj,null,2);saveDraft();
+    addRows(obj);
+    message('aiStatus','Recette reçue et enregistrée dans le lot.');
+    show('images');
+  }catch(e){
+    message('aiStatus','Échec : '+e.message,true);
+    message('recipeStatus','Génération interrompue : '+e.message,true);
+  }finally{b.disabled=false;b.textContent='Générer via mon IA (facultatif)';}
+});
+function renderRecipes(){const host=$('recipeList');host.replaceChildren();$('recipeCount').textContent=recipes.length+' / 10';for(const r of recipes){const div=document.createElement('article');div.className='card';div.innerHTML='<div class="flexrow"><h3>'+ESC(r.title)+'</h3><span class="pill">'+r.scenes.length+' scènes</span></div><p class="tiny muted">'+r.ingredients.length+' ingrédients · '+r.steps.length+' étapes · '+r.scenes.length*5+' secondes prévues</p><p class="helper">'+ESC(r.sourceNote||'Recette personnelle')+'</p><div class="actions"><button data-work="'+ESC(r.id)+'">Travailler cette recette</button><button class="secondary" data-print="'+ESC(r.id)+'">Fiche PDF</button><button class="secondary" data-remove="'+ESC(r.id)+'">Retirer du lot</button></div>';host.append(div)}host.querySelectorAll('[data-work]').forEach(b=>b.onclick=()=>{persistScene();currentId=b.dataset.work;currentScene=0;save();updateSelects();show('images')});host.querySelectorAll('[data-print]').forEach(b=>b.onclick=()=>printRecipe(b.dataset.print));host.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{if(!confirm('Retirer cette recette du lot ? (Les fichiers déjà téléchargés sont conservés.)'))return;recipes=recipes.filter(r=>r.id!==b.dataset.remove);currentId=recipes[0]?.id||null;save();renderRecipes();updateSelects()})}
+function downloadFile(filename,blob){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),20000)}
+function downloadText(filename,body,type='text/plain;charset=utf-8'){downloadFile(filename,new Blob([body],{type}))}
+$('downloadAll').onclick=()=>downloadText('les-recettes-de-fafa-lot.json',JSON.stringify({brand:'Les recettes de Fafa',createdAt:new Date().toISOString(),recipes:recipes.map(r=>({recipe:r,storyboard:r.scenes}))},null,2),'application/json');
+$('downloadProject').onclick=()=>{
+  persistScene();saveDraft();
+  let draft=null;try{draft=JSON.parse(localStorage.getItem(DRAFT_KEY)||'null')}catch{}
+  const pack={format:'fafa-studio-project-v1',exportedAt:new Date().toISOString(),recipes,currentId,currentScene,activeView,draft};
+  downloadText('sauvegarde-complete-fafa.json',JSON.stringify(pack,null,2),'application/json');
+  message('recipeStatus','Sauvegarde téléchargée : recettes, brouillon, prompts et scènes. Les clés API et les photos ne sont jamais incluses.');
+};
+$('restoreProject').addEventListener('change',async event=>{
+  try{
+    const file=event.target.files?.[0];if(!file)return;
+    if(file.size>10*1024*1024)throw Error('Fichier trop volumineux (10 Mo maximum).');
+    const pack=JSON.parse(await file.text());
+    if(pack.format!=='fafa-studio-project-v1'||!Array.isArray(pack.recipes)||pack.recipes.length>10)throw Error('Ce fichier n’est pas une sauvegarde du studio.');
+    if(!pack.recipes.every(r=>r&&typeof r.id==='string'&&typeof r.title==='string'&&Array.isArray(r.scenes)&&Array.isArray(r.ingredients)&&Array.isArray(r.steps)))throw Error('Les recettes de la sauvegarde sont incomplètes.');
+    if(recipes.length&&!confirm('Remplacer les recettes présentes par celles de ta sauvegarde ?'))return;
+    recipes=pack.recipes;currentId=recipes.some(r=>r.id===pack.currentId)?pack.currentId:(recipes[0]?.id||null);
+    currentScene=Number.isInteger(pack.currentScene)?Math.max(0,pack.currentScene):0;
+    activeView=['recherche','recettes','images','montage'].includes(pack.activeView)?pack.activeView:'recettes';
+    save();
+    if(pack.draft&&typeof pack.draft==='object'){
+      try{localStorage.setItem(DRAFT_KEY,JSON.stringify(pack.draft))}catch{}
+      restoreDraft();
+    }
+    renderRecipes();updateSelects();show(activeView);
+    message('recipeStatus','Travail restauré depuis ta sauvegarde. Les clés et photos ne font pas partie du fichier.');
+  }catch(e){message('recipeStatus','Restauration impossible : '+e.message,true)}
+  finally{event.target.value=''}
+});
+$('downloadPrompts').onclick=()=>downloadText('fafa-tous-les-prompts.txt',recipes.flatMap(r=>r.scenes.map((s,i)=>r.title+' — scène '+(i+1)+'\n'+sceneImagePrompt(r,i))).join('\n\n----\n\n'));
+function printRecipe(id=currentId){const r=recipes.find(v=>v.id===id);if(!r){message('recipeStatus','Ajoute une recette d’abord.',true);return}const source=r.source?.url?'<p>Source d’inspiration : '+ESC(r.source.url)+'</p>':'';$('printArea').innerHTML='<h1>Les recettes de Fafa</h1><h2>'+ESC(r.title)+'</h2><p>Pour '+ESC(r.servings)+' personnes · Préparation : '+ESC(r.prepTime)+' · Cuisson : '+ESC(r.cookTime)+'</p>'+source+'<p>'+ESC(r.sourceNote)+'</p><h2>Ingrédients</h2><ul>'+r.ingredients.map(x=>'<li>'+ESC(x)+'</li>').join('')+'</ul><h2>Préparation</h2><ol>'+r.steps.map(s=>'<li><strong>'+ESC(s.title)+'</strong> : '+ESC(s.action)+'</li>').join('')+'</ol>';window.print()}
+$('printRecipe').onclick=()=>printRecipe();
+function updateSelects(){for(const id of ['imageRecipe','movieRecipe']){const el=$(id);el.replaceChildren();if(!recipes.length)el.add(new Option('Aucune recette',''));else for(const r of recipes)el.add(new Option(r.title,r.id));if(recipes.some(r=>r.id===currentId))el.value=currentId;else{currentId=recipes[0]?.id||null;el.value=currentId||''}}updateScenes();updateMovieUI()}
+function chosenRecipe(){return recipes.find(r=>r.id===currentId)||null}
+function currentKey(){return currentId+':'+currentScene}
+function updateScenes(){const r=chosenRecipe(),sel=$('imageScene');$('dishContinuity').value=r?.dishContinuity||'';sel.replaceChildren();if(!r){sel.add(new Option('Aucune scène','0'));currentScene=0;updateSceneUI();return}r.scenes.forEach((s,i)=>sel.add(new Option(String(i+1).padStart(2,'0')+' · '+s.title,String(i))));currentScene=Math.min(currentScene,r.scenes.length-1);sel.value=String(currentScene);updateSceneUI();if(typeof updateAudioProgress==='function')updateAudioProgress()}
+function updateImagesUI(){if(currentId)$('imageRecipe').value=currentId;updateScenes()}
+function updateSceneUI(){const r=chosenRecipe(),s=r?.scenes?.[currentScene],el=$('scenePreview');el.replaceChildren();const src=images.get(currentKey());if(src){const img=document.createElement('img');img.src=src;img.alt='Photo de la scène '+(currentScene+1);el.append(img)}else el.textContent=s?'Aucune photo pour cette scène.':'Ajoute une recette et son storyboard.';$('photoPrompt').value=s?(s.editedImagePrompt??(s.imagePrompt&&s.imagePrompt.length>60?s.imagePrompt+'\n'+consistentPrompt(r,s):consistentPrompt(r,s))):'';$('voiceText').value=s?(s.voiceOver||s.caption||s.action||''):'';$('sceneVisualNote').value=s?(s.visualNote||''):'';$('sceneDuration').textContent='5 s / scène';const count=r?r.scenes.filter((_,i)=>images.has(r.id+':'+i)).length:0;$('photoProgress').textContent=count+' / '+(r?.scenes.length||0)+' photos';updateBatchProgress(r);$('uploadPhoto').value=''}
+$('dishContinuity').addEventListener('input',()=>{const r=chosenRecipe();if(!r)return;r.dishContinuity=$('dishContinuity').value;save();$('consistencyStatus').textContent='Règle sauvegardée pour '+r.scenes.length+' scènes. Elle s’appliquera aux nouvelles images et aux exports.'});
+for(const id of ['photoPrompt','voiceText','sceneVisualNote'])$(id).addEventListener('input',()=>{const r=chosenRecipe();if(!r||$('imageScene').value!==String(currentScene)||$('imageRecipe').value!==currentId)return;persistScene()});
+$('imageRecipe').onchange=e=>{persistScene();currentId=e.target.value;currentScene=0;save();updateSelects()};$('imageScene').onchange=e=>{persistScene();currentScene=Number(e.target.value);save();updateSceneUI()};$('nextScene').onclick=()=>{const r=chosenRecipe();if(!r)return;persistScene();currentScene=Math.min(r.scenes.length-1,currentScene+1);save();$('imageScene').value=String(currentScene);updateSceneUI()};
+function openDB(){return new Promise(resolve=>{if(!('indexedDB'in window)){resolve(null);return}try{const req=indexedDB.open('fafa-photo-store',1);req.onupgradeneeded=()=>req.result.createObjectStore('photos');req.onsuccess=()=>resolve(req.result);req.onerror=()=>resolve(null)}catch{resolve(null)}})}
+function storePhoto(key,data){images.set(key,data);if(!db)return Promise.resolve(false);return new Promise(res=>{try{const tx=db.transaction('photos','readwrite');tx.objectStore('photos').put(data,key);tx.oncomplete=()=>res(true);tx.onerror=()=>res(false)}catch{res(false)}})}
+function restorePhotos(){if(!db)return;const tx=db.transaction('photos','readonly'),r=tx.objectStore('photos').openCursor();r.onsuccess=e=>{const c=e.target.result;if(c){images.set(c.key,c.value);c.continue()}else{updateSceneUI();updateMovieUI()}}}
+$('uploadPhoto').onchange=async e=>{const file=e.target.files?.[0];if(!file||!chosenRecipe())return;if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>12*1024*1024){message('imageStatus','Fichier PNG/JPEG/WebP inférieur à 12 Mo requis.',true);return}const fr=new FileReader();fr.onload=async()=>{const ok=await storePhoto(currentKey(),fr.result);updateSceneUI();message('imageStatus',ok?'Photo importée et conservée sur cet appareil.':'Photo importée en mémoire. Télécharge-la : le stockage permanent n’est pas disponible.')};fr.readAsDataURL(file)};
+// Génération unitaire et en série : même service, mêmes paramètres, gestion d'arrêt et d'erreurs.
+let photoBatch=null;
+const pauseMs=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+function dishInstruction(r,i){
+  const dish=String(r.dishContinuity||'').trim() || (isOvenRecipe(r)?'Toujours le même plat allant au four du début à la fin, avec la même forme, matière, couleur et les mêmes poignées. Jamais un autre plat de service ni une assiette.':'');if(!dish)return '';
+  const scene=r.scenes[i]||{};
+  // Ingredient-only scenes can still show small bowls, but should not invent plated servings.
+  const isIngredients=/(ingrédient|peser|découp|préparer|assaisonn|éminc|mélang)/i.test((scene.title||'')+' '+(scene.action||'')) && !/(four|cuisson|enfourner|servir|dressage|final)/i.test((scene.title||'')+' '+(scene.action||''));
+  return '\nRÈGLE DE CONTINUITÉ VISUELLE PRIORITAIRE pour la scène '+(i+1)+' et toute la recette : '+dish+'. Même plat exactement (forme, couleur, matériau, rebords, poignées) pour les scènes où le plat à four est visible et pour tout plan final. Ne jamais remplacer le récipient par une assiette de service, un bol, une poêle ou un autre plat. '+(isIngredients?'Les bols de préparation des ingrédients sont autorisés pendant cette étape seulement. ':'Le mets terminé reste présenté dans ce même plat de cuisson. ')+'Si une instruction de scène contredit cette règle sur le récipient, respecter en priorité cette règle. Photo culinaire réaliste, sans texte ajouté.';
+}
+function sceneImagePrompt(r,i){
+  const scene=r.scenes[i];
+  const base=scene.editedImagePrompt??(scene.imagePrompt&&scene.imagePrompt.length>60?scene.imagePrompt+'\n'+consistentPrompt(r,scene):consistentPrompt(r,scene));
+  return base+dishInstruction(r,i);
+}
+async function requestAgnesPhoto(key,prompt,signal){
+  const response=await fetch('https://apihub.agnes-ai.com/v1/images/generations',{
+    method:'POST',signal,headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
+    body:JSON.stringify({model:'agnes-image-2.1-flash',prompt,size:'1K',ratio:'9:16',return_base64:true})
+  });
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok){
+    const why=data.error?.message||data.message||('HTTP '+response.status);
+    const explanation=response.status===401?'Clé Agnès refusée (401)':response.status===402?'Crédits insuffisants ou paiement requis (402)':response.status===429?'Limite de requêtes ou quota atteint (429)':'Erreur du service ('+response.status+')';
+    throw Error(explanation+' : '+why);
+  }
+  const item=data.data?.[0];
+  if(item?.b64_json){
+    const b64=item.b64_json.replace(/^data:image\/[^;]+;base64,/,'');
+    // La réponse est enregistrée en local sans transférer la photo vers un autre fournisseur.
+    return 'data:image/png;base64,'+b64;
+  }
+  if(item?.url){
+    const fr=await fetch(item.url,{signal});
+    if(!fr.ok)throw Error('Image temporaire inaccessible ('+fr.status+')');
+    const blob=await fr.blob();
+    return await new Promise((resolve,reject)=>{
+      const reader=new FileReader();reader.onload=()=>resolve(reader.result);
+      reader.onerror=()=>reject(Error('Image illisible'));reader.readAsDataURL(blob);
+    });
+  }
+  throw Error('Aucune image dans la réponse Agnès.');
+}
+function updateBatchProgress(r){
+  const n=r?.scenes?.length||0;
+  const completed=r?r.scenes.filter((_,i)=>images.has(r.id+':'+i)).length:0;
+  const progress=$('photoBatchProgress');progress.max=Math.max(n,1);progress.value=completed;
+  if(!photoBatch?.running){
+    $('photoBatchStatus').textContent=n?completed+' / '+n+' photos présentes · '+(n-completed)+' à générer.':'Importe d’abord une recette avec ses scènes.';
+  }
+  $('downloadPhotosZip').disabled=completed===0||!!photoBatch?.running;
+}
+function setBatchBusy(on){
+  $('generateAllPhotos').disabled=on;
+  $('stopPhotoBatch').disabled=!on;
+  $('generatePhoto').disabled=on;
+  $('imageRecipe').disabled=on;
+  $('imageScene').disabled=on;
+  $('nextScene').disabled=on;
+  $('uploadPhoto').disabled=on;$('uploadManyPhotos').disabled=on;
+  $('photoPrompt').disabled=on;
+  $('downloadPhotosZip').disabled=on;
+}
+$('uploadManyPhotos').onchange=async event=>{
+  if(photoBatch?.running)return;
+  const r=chosenRecipe();if(!r)return;
+  const files=[...event.target.files||[]];if(!files.length)return;
+  let imported=0,skipped=0,notSaved=0;
+  try{
+    if(files.length>40){message('imageStatus','Limite : sélectionne au maximum 40 photos à la fois.',true);return}
+    for(const file of files){
+      const name=file.name||'';
+      let idx=-1;
+      const direct=name.match(/^fafa-(\d{1,3})\.(?:png|jpe?g|webp)$/i);
+      const numbered=name.match(/^fafa-scene-(\d{1,3})\.(?:png|jpe?g|webp)$/i);
+      if(direct)idx=Number(direct[1]);
+      else if(numbered)idx=Number(numbered[1])-1;
+      if(idx<0||idx>=r.scenes.length||!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>12*1024*1024){skipped++;continue}
+      const dest=r.id+':'+idx;if(images.has(dest)){skipped++;continue}
+      const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(Error('Lecture impossible : '+file.name));reader.readAsDataURL(file)});
+      if(!await storePhoto(dest,data))notSaved++;
+      imported++;
+    }
+    updateSceneUI();updateBatchProgress(r);updateMovieUI();
+    message('imageStatus',imported+' photo(s) restaurée(s) · '+skipped+' ignorée(s).'+(notSaved?' Attention : '+notSaved+' photo(s) non persistantes, télécharge le ZIP.':''));
+  }catch(e){message('imageStatus','Restauration interrompue : '+e.message,true)}
+  finally{event.target.value=''}
+};
+$('generatePhoto').onclick=async()=>{
+  const key=$('imageKey').value.trim(),r=chosenRecipe();
+  if(photoBatch?.running)return;
+  if(!r){message('imageStatus','Choisis une recette.',true);return}
+  if(!key){message('imageStatus','Ajoute une clé Agnès Images dans « Recherche > Réglages », ou importe une photo.',true);return}
+  persistScene();
+  const button=$('generatePhoto'),dest=currentKey();
+  button.disabled=true;
+  message('imageStatus','Génération de la scène '+(currentScene+1)+' avec Agnès en cours…');
+  try{
+    const src=await requestAgnesPhoto(key,sceneImagePrompt(r,currentScene));
+    const saved=await storePhoto(dest,src);updateSceneUI();updateBatchProgress(r);
+    message('imageStatus','Photo créée. '+(saved?'Enregistrée sur cet appareil.':'Stockage local indisponible : télécharge la photo maintenant.'));
+  }catch(e){message('imageStatus','Image non générée : '+e.message,true)}
+  finally{button.disabled=false}
+};
+$('stopPhotoBatch').onclick=()=>{
+  if(!photoBatch?.running)return;
+  photoBatch.stopRequested=true;
+  $('stopPhotoBatch').disabled=true;
+  photoBatch.controller?.abort();
+  message('photoBatchStatus','Arrêt demandé… les images déjà enregistrées sont conservées.');
+};
+$('generateAllPhotos').onclick=async()=>{
+  if(photoBatch?.running)return;
+  const r=chosenRecipe(),key=$('imageKey').value.trim();
+  if(!r?.scenes?.length){message('photoBatchStatus','Importe une recette avec un storyboard avant de lancer les photos.',true);return}
+  if(!key){message('photoBatchStatus','Saisis la clé Agnès Images dans Recherche > Réglages.',true);return}
+  persistScene();
+  const remaining=r.scenes.map((_,i)=>i).filter(i=>!images.has(r.id+':'+i));
+  if(!remaining.length){message('photoBatchStatus','Toutes les photos sont déjà présentes. Utilise le téléchargement ZIP.');return}
+  if(!confirm('Créer '+remaining.length+' image(s) avec Agnès ? Cela effectue '+remaining.length+' appel(s) API qui peuvent consommer tes crédits ou entraîner des frais selon ton compte. Continuer ?'))return;
+  const context={running:true,stopRequested:false,controller:null,recipeId:r.id};
+  photoBatch=context;
+  setBatchBusy(true);
+  let created=0,allSaved=true,problem='';
+  try{
+    for(const i of remaining){
+      if(context.stopRequested)break;
+      const dest=r.id+':'+i;
+      if(images.has(dest))continue;
+      message('photoBatchStatus','Création de la scène '+(i+1)+' / '+r.scenes.length+' : '+r.scenes[i].title+'\n'+created+' nouvelle(s) image(s) enregistrée(s).');
+      const controller=new AbortController();context.controller=controller;
+      try{
+        const src=await requestAgnesPhoto(key,sceneImagePrompt(r,i),controller.signal);
+        if(context.stopRequested)break;
+        const persisted=await storePhoto(dest,src);
+        if(!persisted)allSaved=false;
+        created++;
+        if(currentId===r.id){currentScene=i;save();$('imageScene').value=String(i);updateSceneUI()}
+        updateBatchProgress(r);
+      }catch(e){if(context.stopRequested||e?.name==='AbortError')break;problem='Scène '+(i+1)+' : '+e.message;break}
+      finally{context.controller=null}
+      if(context.stopRequested)break;
+      // Appels espacés pour éviter d'envoyer toutes les requêtes simultanément.
+      if(i!==remaining[remaining.length-1])await pauseMs(1200);
+    }
+  }finally{
+    const stopped=context.stopRequested;
+    context.running=false;photoBatch=null;setBatchBusy(false);updateBatchProgress(r);updateMovieUI();
+    const completed=r.scenes.filter((_,i)=>images.has(r.id+':'+i)).length;
+    const note=allSaved?'':' Attention : certaines photos sont uniquement en mémoire. Télécharge le ZIP avant de quitter.';
+    if(problem){message('photoBatchStatus','Génération interrompue : '+problem+'\n'+completed+' / '+r.scenes.length+' photos présentes. Clique de nouveau pour reprendre les scènes manquantes.'+note,true)}
+    else if(stopped){message('photoBatchStatus','Génération arrêtée. '+completed+' / '+r.scenes.length+' photos conservées. Relance pour compléter les scènes manquantes.'+note)}
+    else{message('photoBatchStatus','Terminé : '+completed+' / '+r.scenes.length+' photos prêtes ('+created+' générées maintenant).'+note)}
+    message('imageStatus',completed+' / '+r.scenes.length+' photos pour cette recette.');
+  }
+};
+window.addEventListener('pagehide',()=>{if(photoBatch?.running){photoBatch.stopRequested=true;photoBatch.controller?.abort()}});
+// Export ZIP sans bibliothèque externe : archive standard « stored », utile sur mobile.
+const CRC_TABLE=(()=>{const tab=[];for(let n=0;n<256;n++){let c=n;for(let j=0;j<8;j++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);tab.push(c>>>0)}return tab})();
+function crc32(bytes){let crc=0xFFFFFFFF;for(const b of bytes)crc=CRC_TABLE[(crc^b)&255]^(crc>>>8);return (crc^0xFFFFFFFF)>>>0}
+const e16=(dv,pos,n)=>dv.setUint16(pos,n,true),e32=(dv,pos,n)=>dv.setUint32(pos,n>>>0,true);
+function makeZip(entries){
+  const local=[],central=[];let offset=0;
+  for(const {name,bytes} of entries){
+    const fname=new TextEncoder().encode(name),checksum=crc32(bytes),length=bytes.length;
+    const header=new Uint8Array(30+fname.length),h=new DataView(header.buffer);
+    e32(h,0,0x04034b50);e16(h,4,20);e16(h,6,0x0800);e16(h,8,0);e32(h,14,checksum);e32(h,18,length);e32(h,22,length);e16(h,26,fname.length);header.set(fname,30);
+    local.push(header,bytes);
+    const record=new Uint8Array(46+fname.length),d=new DataView(record.buffer);
+    e32(d,0,0x02014b50);e16(d,4,20);e16(d,6,20);e16(d,8,0x0800);e16(d,10,0);e32(d,16,checksum);e32(d,20,length);e32(d,24,length);e16(d,28,fname.length);e32(d,42,offset);record.set(fname,46);central.push(record);
+    offset+=header.length+length;
+  }
+  const cdSize=central.reduce((sum,part)=>sum+part.length,0),end=new Uint8Array(22),dv=new DataView(end.buffer);
+  e32(dv,0,0x06054b50);e16(dv,8,entries.length);e16(dv,10,entries.length);e32(dv,12,cdSize);e32(dv,16,offset);
+  return new Blob([...local,...central,end],{type:'application/zip'});
+}
+$('downloadPhotosZip').onclick=async()=>{
+  const r=chosenRecipe();if(!r)return;
+  const button=$('downloadPhotosZip');button.disabled=true;
+  try{
+    const entries=[];
+    for(let i=0;i<r.scenes.length;i++){
+      const src=images.get(r.id+':'+i);if(!src)continue;
+      const kind=src.slice(0,40).match(/^data:image\/(jpeg|png|webp)/i)?.[1]||'png';
+      const ext=kind==='jpeg'?'jpg':kind;
+      const res=await fetch(src);if(!res.ok)throw Error('Impossible de lire la photo '+(i+1));
+      entries.push({name:'fafa-scene-'+String(i+1).padStart(2,'0')+'.'+ext,bytes:new Uint8Array(await res.arrayBuffer())});
+    }
+    if(!entries.length)throw Error('Aucune photo à télécharger.');
+    const safe=(r.title||'recette').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9-]+/g,'-').slice(0,45);
+    downloadFile('les-recettes-de-fafa-'+safe+'.zip',makeZip(entries));
+    message('photoBatchStatus',entries.length+' photo(s) réunie(s) dans un fichier ZIP. Conserve aussi ta sauvegarde du projet JSON.');
+  }catch(e){message('photoBatchStatus','Archive ZIP impossible : '+e.message,true)}
+  finally{button.disabled=false}
+};
+$('copyPhotoPrompt').onclick=()=>copyText($('photoPrompt').value,'imageStatus');$('savePhoto').onclick=()=>{const src=images.get(currentKey());if(!src){message('imageStatus','Aucune photo à télécharger.',true);return}const a=document.createElement('a');a.href=src;a.download='fafa-'+currentScene.toString().padStart(2,'0')+'.png';a.click()};
+function voiceOptions(){const sel=$('voiceChoice'),old=sel.value;sel.replaceChildren();const list=voice?.getVoices().filter(v=>/^fr(?:-|_)/i.test(v.lang))||[];if(!list.length)sel.add(new Option('Voix FR du téléphone',''));else for(const v of list)sel.add(new Option(v.name+' ('+v.lang+')',v.voiceURI));if([...sel.options].some(o=>o.value===old))sel.value=old}
+if(voice){voiceOptions();voice.addEventListener?.('voiceschanged',voiceOptions)}
+$('speak').onclick=()=>{stopVoiceSequence();if(!voice){message('imageStatus','Voix non prise en charge.',true);return}const text=$('voiceText').value.trim();if(!text){message('imageStatus','Ajoute une narration.',true);return}voice.cancel();const msg=new SpeechSynthesisUtterance(text);msg.lang='fr-FR';msg.rate=1.1;const chosen=voice.getVoices().find(v=>v.voiceURI===$('voiceChoice').value);if(chosen)msg.voice=chosen;voice.speak(msg);message('imageStatus','Lecture en français à 1,10× ; aucun fichier audio n’est créé.')};$('stopSpeech').onclick=()=>stopVoiceSequence();$('saveNarration').onclick=()=>{const r=chosenRecipe();if(!r)return;r.scenes[currentScene].voiceOver=$('voiceText').value;r.scenes[currentScene].editedImagePrompt=$('photoPrompt').value;save();message('imageStatus','Texte et prompt de la scène enregistrés.')};
+function srtTime(sec){const n=Math.round(sec*1000);return [Math.floor(n/3600000),Math.floor(n/60000)%60,Math.floor(n/1000)%60].map(x=>String(x).padStart(2,'0')).join(':')+','+String(n%1000).padStart(3,'0')}
+$('downloadSrt').onclick=()=>{const r=chosenRecipe();if(!r){message('imageStatus','Aucune recette.',true);return}downloadText('fafa-'+r.title.replace(/\W+/g,'-')+'.srt',r.scenes.map((s,i)=>(i+1)+'\n'+srtTime(i*5)+' --> '+srtTime((i+1)*5)+'\n'+(s.voiceOver||s.caption||s.title)+'\n').join('\n'))};
+// Tous les scripts et voix off : export de la recette courante, sans recopier 20 textes.
+let voiceBatchPlaying=false, voiceBatchToken=0, audioBatch=null, audioDB=null;
+const audioReady=new Map();
+const utf8=str=>new TextEncoder().encode(str);
+const audioKey=(r,i)=>r.id+':'+i;
+function voiceTextAt(s){return String(s.voiceOver||s.caption||s.action||s.title||'').trim()}
+function tidyFilename(x){return String(x||'recette').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'-').replace(/^-+|-+$/g,'').slice(0,55)||'recette'}
+function scriptData(r){
+  const segments=[],prompts=[],storyboard=[];
+  r.scenes.forEach((s,i)=>{
+    const index=String(i+1).padStart(2,'0');
+    segments.push('SCÈNE '+index+' – '+(s.title||'')+'\n'+voiceTextAt(s));
+    prompts.push('SCÈNE '+index+' – '+(s.title||'')+'\n'+sceneImagePrompt(r,i));
+    storyboard.push('SCÈNE '+index+' – '+(s.title||'')+'\n'
+      +'Durée prévue : 5 secondes\n'
+      +'Geste / action : '+(s.action||'')+'\n'
+      +'Texte à l’écran : '+(s.caption||'')+'\n'
+      +'Narration : '+voiceTextAt(s)+'\n'
+      +'Consigne vidéo : '+(s.videoPrompt||s.action||s.title||'')+'\n'
+      +'Vérification photo : '+(s.visualNote||'À vérifier sur la photo')+'\n');
+  });
+  const srt=r.scenes.map((s,i)=>(i+1)+'\n'+srtTime(i*5)+' --> '+srtTime((i+1)*5)+'\n'+voiceTextAt(s)+'\n').join('\n');
+  const header='Les recettes de Fafa – '+r.title+'\n'+r.scenes.length+' scènes de 5 secondes\n'+'Récipient constant : '+(r.dishContinuity||'non défini')+'\n\n';
+  return [
+    {name:'01-voix-off-completes.txt',bytes:utf8(header+segments.join('\n\n'))},
+    {name:'02-scripts-des-scenes.txt',bytes:utf8(header+storyboard.join('\n'))},
+    {name:'03-prompts-photos.txt',bytes:utf8(header+prompts.join('\n\n---\n\n'))},
+    {name:'04-sous-titres.srt',bytes:utf8(srt)},
+    {name:'05-storyboard.json',bytes:utf8(JSON.stringify({title:r.title,scenes:r.scenes.map((s,i)=>({scene:i+1,title:s.title||'',action:s.action||'',caption:s.caption||'',voiceOver:voiceTextAt(s),imagePrompt:sceneImagePrompt(r,i),visualNote:s.visualNote||'',videoPrompt:s.videoPrompt||''}))},null,2))}
+  ];
+}
+function voiceStatus(text,error=false){message('voiceBatchStatus',text,error)}
+$('syncNarrations').onclick=async()=>{
+  const r=currentAudioRecipe();if(!r?.scenes?.length){voiceStatus('Choisis d’abord une recette.',true);return}
+  const provider=$('textProvider').value==='agnes'?'Agnès':'Mistral';
+  if(!$('textKey').value.trim()){voiceStatus('Pour adapter automatiquement les textes, indique une clé '+provider+' valide dans l’onglet Recettes > Clé IA texte. Tu peux aussi exporter directement les 20 textes actuels sans frais.',true);return}
+  const ready=r.scenes.filter(s=>s.visualNote?.trim()).length;
+  if(!confirm('Réécrire les '+r.scenes.length+' narrations et scripts selon les prompts corrigés et le même plat à four ? '+ready+' note(s) visuelle(s) renseignée(s). Cela effectue UN appel API '+provider+' (crédits possibles). Une sauvegarde des textes précédents sera conservée.'))return;
+  const b=$('syncNarrations');b.disabled=true;voiceStatus('Adaptation des '+r.scenes.length+' narrations en cours via '+provider+'…');
+  try{
+    const scenes=r.scenes.map((s,i)=>({number:i+1,title:s.title||'',step:s.action||'',caption:s.caption||'',narrationActuelle:voiceTextAt(s),promptPhotoCorrige:sceneImagePrompt(r,i).slice(0,1650),photoVueParUtilisatrice:s.visualNote||'non renseignée'}));
+    const instruction='Tu es scénariste de recettes « Les recettes de Fafa ». Reformule les narrations et scripts de '+r.scenes.length+' scènes selon les prompts photos modifiés et les notes visuelles de la réalisatrice. Tu ne VOIS PAS réellement les photos : ne prétends pas les avoir analysées. Les notes explicites de la réalisatrice priment sur les anciens textes. Respecte les ingrédients, gestes culinaires et ordre des étapes. Même récipient de cuisson impérativement : '+(r.dishContinuity||'selon les prompts photo corrigés')+'. Ne mentionne jamais d’assiette ou de transfert dans un autre plat si ce n’est pas réellement prévu. Une scène doit avoir une phrase de voix off en français naturel (maximum 13 mots, adaptée à ~5 secondes), un texte à écran court, et un script vidéo court correspondant exactement à ce qu’on doit montrer. Pas d’élément nouveau non décrit. Réponds UNIQUEMENT par JSON valide de la forme {"scenes":[{"number":1,"voiceOver":"...","caption":"...","videoPrompt":"..."}]}. Retourne exactement '+r.scenes.length+' scènes numérotées de 1 à '+r.scenes.length+'. Données : '+JSON.stringify({title:r.title,dishContinuity:r.dishContinuity||'',scenes});
+    const obj=await aiText(instruction),rows=obj?.scenes;
+    if(!Array.isArray(rows)||rows.length!==r.scenes.length)throw Error('La réponse de l’IA ne contient pas exactement '+r.scenes.length+' scènes. Aucun texte n’a été remplacé.');
+    for(let i=0;i<rows.length;i++){const v=rows[i];if(Number(v?.number)!==i+1||typeof v.voiceOver!=='string'||!v.voiceOver.trim()||typeof v.caption!=='string'||typeof v.videoPrompt!=='string')throw Error('Scène '+(i+1)+' incorrecte dans la réponse. Aucun texte n’a été remplacé.')}
+    r.previousScripts={savedAt:new Date().toISOString(),scenes:r.scenes.map(s=>({voiceOver:s.voiceOver,caption:s.caption,videoPrompt:s.videoPrompt}))};
+    for(let i=0;i<rows.length;i++){r.scenes[i].voiceOver=rows[i].voiceOver.trim();r.scenes[i].caption=rows[i].caption.trim();r.scenes[i].videoPrompt=rows[i].videoPrompt.trim()}
+    save();updateSceneUI();updateAudioProgress();voiceStatus(r.scenes.length+' narrations + scripts harmonisés avec les prompts corrigés. Vérifie les textes, puis exporte le ZIP ou génère les MP3. Tu peux annuler cette adaptation.');
+  }catch(e){voiceStatus('Adaptation impossible : '+e.message+' Les textes précédents sont conservés.',true)}finally{b.disabled=false}
+};
+$('undoNarrations').onclick=()=>{
+  const r=currentAudioRecipe();const old=r?.previousScripts?.scenes;
+  if(!Array.isArray(old)||old.length!==r.scenes.length){voiceStatus('Aucune adaptation précédente à annuler.',true);return}
+  if(!confirm('Rétablir les narrations, titres à écran et scripts précédents ? Les prompts photos corrigés resteront identiques.'))return;
+  r.scenes.forEach((s,i)=>{s.voiceOver=old[i].voiceOver||'';s.caption=old[i].caption||'';s.videoPrompt=old[i].videoPrompt||''});
+  delete r.previousScripts;save();updateSceneUI();updateAudioProgress();voiceStatus('Anciens textes restaurés. Les prompts photos et images sont inchangés.');
+};
+function currentAudioRecipe(){persistScene();return chosenRecipe()}
+$('exportAllScripts').onclick=()=>{
+  const r=currentAudioRecipe();if(!r?.scenes?.length){voiceStatus('Importe une recette avec ses scènes.',true);return}
+  downloadFile('fafa-'+tidyFilename(r.title)+'-scripts-'+r.scenes.length+'-scenes.zip',makeZip(scriptData(r)));
+  voiceStatus('ZIP téléchargé : '+r.scenes.length+' voix off écrites, scripts, prompts photos et sous-titres SRT. Sans frais.');
+};
+$('copyAllNarrations').onclick=()=>{
+  const r=currentAudioRecipe();if(!r?.scenes?.length){voiceStatus('Choisis une recette.',true);return}
+  copyText(r.scenes.map((s,i)=>'Scène '+(i+1)+' — '+(s.title||'')+'\n'+voiceTextAt(s)).join('\n\n'),'voiceBatchStatus');
+};
+function stopVoiceSequence(){voiceBatchToken++;voiceBatchPlaying=false;voice?.cancel();$('playAllVoices').disabled=false;$('stopAllVoices').disabled=true}
+$('playAllVoices').onclick=()=>{
+  const r=currentAudioRecipe();if(!r?.scenes?.length||!voice){voiceStatus('Il faut une recette et une voix française disponible.',true);return}
+  stopVoiceSequence();const token=voiceBatchToken;voiceBatchPlaying=true;
+  $('playAllVoices').disabled=true;$('stopAllVoices').disabled=false;
+  const selectedVoice=voice.getVoices().find(v=>v.voiceURI===$('voiceChoice').value);
+  let i=0;
+  function next(){
+    if(token!==voiceBatchToken)return;
+    while(i<r.scenes.length&&!voiceTextAt(r.scenes[i]))i++;
+    if(i>=r.scenes.length){stopVoiceSequence();voiceStatus(r.scenes.length+' narrations lues. La voix du téléphone ne s’enregistre pas en MP3.');return}
+    const sceneNumber=++i;
+    const utterance=new SpeechSynthesisUtterance(voiceTextAt(r.scenes[sceneNumber-1]));
+    utterance.lang='fr-FR';utterance.rate=1.1;if(selectedVoice)utterance.voice=selectedVoice;
+    utterance.onend=()=>{if(token===voiceBatchToken)next()};
+    utterance.onerror=e=>{if(token===voiceBatchToken){stopVoiceSequence();voiceStatus('Lecture arrêtée (scène '+sceneNumber+'). Le navigateur peut suspendre la lecture en arrière-plan.',true)}};
+    voiceStatus('Lecture des narrations : scène '+sceneNumber+' / '+r.scenes.length+'. Laisse cet onglet ouvert.');
+    voice.speak(utterance);
+  }
+  next();
+};
+$('stopAllVoices').onclick=()=>{stopVoiceSequence();voiceStatus('Lecture interrompue. Les textes sont conservés.')};
+// Les MP3 sont mémorisés temporairement dans IndexedDB (sans conserver les clés API).
+function openAudioDB(){return new Promise(resolve=>{
+  if(!('indexedDB' in window)){resolve(null);return}
+  try{const req=indexedDB.open('fafa-voix-off-store',1);
+    req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('clips'))req.result.createObjectStore('clips')};
+    req.onsuccess=()=>resolve(req.result);req.onerror=()=>resolve(null);
+  }catch{resolve(null)}
+})}
+function saveAudioClip(key,val){audioReady.set(key,val);if(!audioDB)return Promise.resolve(false);
+  return new Promise(resolve=>{try{const tx=audioDB.transaction('clips','readwrite');tx.objectStore('clips').put(val,key);tx.oncomplete=()=>resolve(true);tx.onerror=()=>resolve(false);tx.onabort=()=>resolve(false)}catch{resolve(false)}});
+}
+function restoreAudioClips(){if(!audioDB)return;try{const tx=audioDB.transaction('clips','readonly');const req=tx.objectStore('clips').openCursor();req.onsuccess=e=>{const c=e.target.result;if(c){if(c.value?.blob&&typeof c.value.text==='string'&&typeof c.value.voiceId==='string')audioReady.set(c.key,c.value);c.continue()}else updateAudioProgress()}}catch{}}
+function selectedElevenVoice(){return $('elevenVoiceId').value.trim()||$('elevenVoice').value.trim()}
+function validAudioFor(r,i,voiceId){const clip=audioReady.get(audioKey(r,i));return !!(clip?.blob&&clip.text===voiceTextAt(r.scenes[i])&&clip.voiceId===voiceId)}
+function updateAudioProgress(){const r=chosenRecipe(),v=selectedElevenVoice();const done=r?.scenes.filter((_,i)=>validAudioFor(r,i,v)).length||0;
+  $('audioBatchProgress').max=Math.max(1,r?.scenes.length||1);$('audioBatchProgress').value=done;
+}
+$('elevenVoice').addEventListener('change',()=>{$('elevenVoiceId').value='';updateAudioProgress()});
+$('elevenVoiceId').addEventListener('input',updateAudioProgress);
+$('loadElevenVoices').onclick=async()=>{
+  const key=$('elevenKey').value.trim();if(!key){voiceStatus('Saisis ta clé API ElevenLabs.',true);return}
+  const btn=$('loadElevenVoices');btn.disabled=true;
+  try{const res=await fetch('https://api.elevenlabs.io/v2/voices?page_size=100',{headers:{'xi-api-key':key}});
+    const body=await res.json().catch(()=>({}));if(!res.ok)throw Error('Erreur '+res.status+' : '+(body.detail?.message||body.detail?.status||body.message||'clé ou permissions à vérifier'));
+    const voices=Array.isArray(body.voices)?body.voices:[];if(!voices.length)throw Error('Aucune voix disponible.');
+    const select=$('elevenVoice');select.replaceChildren();select.add(new Option('Choisir une voix',''));
+    for(const v of voices)if(v.voice_id)select.add(new Option((v.name||'Voix')+' — '+v.voice_id,v.voice_id));
+    voiceStatus(voices.length+' voix ElevenLabs trouvées. Sélectionne ta voix française avant de générer les MP3.');
+  }catch(e){voiceStatus('Voix ElevenLabs indisponibles : '+e.message,true)}finally{btn.disabled=false}
+};
+function stopAudioBatch(){if(!audioBatch)return;audioBatch.stop=true;audioBatch.controller?.abort()}
+$('stopAudioBatch').onclick=()=>{stopAudioBatch();voiceStatus('Arrêt demandé. Les clips déjà enregistrés sont conservés.')};
+window.addEventListener('pagehide',stopAudioBatch);
+async function getElevenMP3(apiKey,voiceId,txt,signal){
+  const res=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+encodeURIComponent(voiceId)+'?output_format=mp3_44100_128',{
+    method:'POST',signal,
+    headers:{'xi-api-key':apiKey,'Content-Type':'application/json','Accept':'audio/mpeg'},
+    body:JSON.stringify({text:txt,model_id:'eleven_multilingual_v2',voice_settings:{stability:0.55,similarity_boost:0.75,speed:1.1}})
+  });
+  if(!res.ok){const d=await res.json().catch(()=>({}));throw Error('HTTP '+res.status+' : '+(d.detail?.message||d.detail?.status||d.message||'vérifie la clé, la voix et les crédits'))}
+  const blob=await res.blob();if(!blob.size)throw Error('MP3 vide');return blob;
+}
+async function audioZip(r,voiceId){
+  const entries=scriptData(r);
+  let n=0;
+  for(let i=0;i<r.scenes.length;i++){
+    const clip=audioReady.get(audioKey(r,i));
+    if(clip?.blob&&clip.text===voiceTextAt(r.scenes[i])&&(voiceId?clip.voiceId===voiceId:true)){
+      entries.push({name:'mp3/scene-'+String(i+1).padStart(2,'0')+'.mp3',bytes:new Uint8Array(await clip.blob.arrayBuffer())});n++;
+    }
+  }
+  if(!n)throw Error('Aucun MP3 prêt pour cette recette et cette voix.');
+  downloadFile('fafa-'+tidyFilename(r.title)+'-voix-off-'+n+'-mp3.zip',makeZip(entries));
+  return n;
+}
+$('downloadAudioZip').onclick=async()=>{
+  const r=currentAudioRecipe();if(!r)return;const btn=$('downloadAudioZip');btn.disabled=true;
+  try{const n=await audioZip(r,selectedElevenVoice());voiceStatus(n+' MP3 et tous les scripts téléchargés dans un ZIP.')}
+  catch(e){voiceStatus(e.message,true)}finally{btn.disabled=false}
+};
+$('generateAllAudio').onclick=async()=>{
+  if(audioBatch?.running)return;
+  const r=currentAudioRecipe(),apiKey=$('elevenKey').value.trim(),voiceId=selectedElevenVoice();
+  if(!r?.scenes?.length){voiceStatus('Choisis une recette avec des scènes.',true);return}
+  if(!apiKey||!voiceId){voiceStatus('Ajoute une clé API ElevenLabs et choisis une voix ou colle son ID.',true);return}
+  const pending=r.scenes.map((_,i)=>i).filter(i=>voiceTextAt(r.scenes[i])&&!validAudioFor(r,i,voiceId));
+  if(!pending.length){try{await audioZip(r,voiceId);voiceStatus('Tous les MP3 sont déjà prêts : ZIP téléchargé.')}catch(e){voiceStatus(e.message,true)}return}
+  const chars=pending.reduce((tot,i)=>tot+voiceTextAt(r.scenes[i]).length,0);
+  if(!confirm('Générer '+pending.length+' MP3 via ElevenLabs ('+chars+' caractères) ? Cette opération consomme des crédits selon ton offre. Aucun abonnement n’est souscrit par l’application.'))return;
+  audioBatch={running:true,stop:false,controller:null};const btn=$('generateAllAudio');btn.disabled=true;$('stopAudioBatch').disabled=false;
+  let created=0,problem='';
+  try{
+    for(const i of pending){
+      if(audioBatch.stop)break;
+      const controller=new AbortController();audioBatch.controller=controller;
+      voiceStatus('Création MP3 '+(i+1)+' / '+r.scenes.length+' : '+(r.scenes[i].title||'')+'\n'+created+' fichier(s) généré(s) pour cette session.');
+      try{const blob=await getElevenMP3(apiKey,voiceId,voiceTextAt(r.scenes[i]),controller.signal);
+        await saveAudioClip(audioKey(r,i),{text:voiceTextAt(r.scenes[i]),voiceId,blob});created++;updateAudioProgress();
+      }catch(e){if(audioBatch.stop&&e.name==='AbortError')break;problem=e.message;break}
+    }
+    const complete=r.scenes.filter((_,i)=>validAudioFor(r,i,voiceId)).length;
+    if(created&&complete===r.scenes.length){await audioZip(r,voiceId);voiceStatus('Terminé : '+complete+' MP3 prêts. ZIP téléchargé avec scripts et SRT.')}
+    else if(problem)voiceStatus('Génération interrompue : '+problem+'\n'+complete+' / '+r.scenes.length+' MP3 prêts. Tu peux les télécharger ou relancer pour les manquants.',true);
+    else voiceStatus('Génération arrêtée : '+complete+' / '+r.scenes.length+' MP3 prêts. Relance pour les manquants.');
+  }catch(e){voiceStatus('Erreur de génération : '+e.message,true)}finally{audioBatch.running=false;audioBatch.controller=null;btn.disabled=false;$('stopAudioBatch').disabled=true}
+};
+openAudioDB().then(x=>{audioDB=x;restoreAudioClips()});
+
+function movieProgress(r){const count=r?r.scenes.filter((_,i)=>images.has(r.id+':'+i)).length:0;return count}
+function updateMovieUI(){const r=chosenRecipe();if(!r){$('movieInfo').textContent='Aucune recette chargée.';return}const n=movieProgress(r),dur=r.scenes.length*5;$('movieRecipe').value=r.id;$('movieInfo').textContent=r.title+' · '+r.scenes.length+' scènes · '+dur+' secondes · '+n+' photos sur '+r.scenes.length+' prêtes.'}
+$('movieRecipe').onchange=e=>{persistScene();currentId=e.target.value;currentScene=0;save();updateSelects()};
+function canvasSlide(ctx,img,caption,progress){const {width:w,height:h}=ctx.canvas;ctx.fillStyle='#12100d';ctx.fillRect(0,0,w,h);const z=Math.max(w/img.width,h/img.height)*(1.02+0.025*progress),iw=img.width*z,ih=img.height*z;ctx.drawImage(img,(w-iw)/2,(h-ih)/2,iw,ih);const grad=ctx.createLinearGradient(0,h*.6,0,h);grad.addColorStop(0,'#0000');grad.addColorStop(1,'#000c');ctx.fillStyle=grad;ctx.fillRect(0,h*.6,w,h*.4);ctx.fillStyle='#fff';ctx.textAlign='center';ctx.shadowColor='#000';ctx.shadowBlur=4;ctx.font='bold 28px system-ui';ctx.fillText('Les recettes de Fafa',w/2,52);ctx.font='bold 32px system-ui';const words=String(caption||'').replace(/\s+/g,' ').split(' ');let line='',lines=[];for(const word of words){const next=(line+' '+word).trim();if(ctx.measureText(next).width>w-60&&line){lines.push(line);line=word}else line=next}if(line)lines.push(line);lines.slice(0,4).forEach((txt,i)=>ctx.fillText(txt,w/2,h-168+41*i));ctx.shadowBlur=0}
+function imageObject(src){return new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(Error('Photo illisible'));img.src=src})}
+$('previewMovie').onclick=async()=>{const r=chosenRecipe();if(!r)return;const src=images.get(r.id+':0');if(!src){message('movieStatus','Il manque la photo de la première scène.',true);return}try{canvasSlide($('previewCanvas').getContext('2d'),await imageObject(src),r.scenes[0].caption,0);message('movieStatus','Aperçu de la scène 1, avec son texte.')}catch(e){message('movieStatus',e.message,true)}};
+$('exportMovie').onclick=async()=>{if(recording)return;const r=chosenRecipe();if(!r||r.scenes.length<20){message('movieStatus','Il faut une recette avec au moins 20 scènes.',true);return}const srcs=r.scenes.map((_,i)=>images.get(r.id+':'+i));const missing=srcs.reduce((a,s,i)=>(!s&&a.push(i+1),a),[]);if(missing.length){message('movieStatus','Images manquantes : scènes '+missing.join(', ')+'. Le montage ne démarre pas.',true);return}const canvas=$('previewCanvas');if(!window.MediaRecorder||!canvas.captureStream){message('movieStatus','Export vidéo indisponible ici. Importe tes photos dans CapCut.',true);return}const mime=['video/mp4;codecs=avc1.42E01E','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(x=>MediaRecorder.isTypeSupported(x));if(!mime){message('movieStatus','Aucun format vidéo supporté par ce navigateur.',true);return}recording=true;$('exportMovie').disabled=true;let stream=null;try{const loaded=await Promise.all(srcs.map(imageObject));stream=canvas.captureStream(25);const chunks=[],recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:2400000});const finished=new Promise((resolve,reject)=>{recorder.ondataavailable=e=>{if(e.data?.size)chunks.push(e.data)};recorder.onstop=resolve;recorder.onerror=e=>reject(e.error||Error('Erreur d’export'))});recorder.start(1000);const ctx=canvas.getContext('2d',{alpha:false});for(let i=0;i<r.scenes.length;i++){for(let j=0;j<125;j++){canvasSlide(ctx,loaded[i],r.scenes[i].caption||r.scenes[i].title,j/125);await new Promise(resolve=>setTimeout(resolve,40))}message('movieStatus','Création vidéo : '+(i+1)+'/'+r.scenes.length+' scènes. Garde cette page ouverte.')}recorder.stop();await finished;if(!chunks.length)throw Error('Aucune donnée vidéo générée.');downloadFile('les-recettes-de-fafa.'+(mime.startsWith('video/mp4')?'mp4':'webm'),new Blob(chunks,{type:mime}));message('movieStatus','Montage de photos exporté sans son. Ajoute la musique, la voix ou les clips de cuisine dans CapCut.')}catch(e){message('movieStatus','Export interrompu : '+e.message,true)}finally{stream?.getTracks().forEach(t=>t.stop());recording=false;$('exportMovie').disabled=false}};
+$('downloadCaption').onclick=()=>{const r=chosenRecipe();if(!r)return;const txt=r.title+'\n\nIngrédients :\n'+r.ingredients.join('\n')+'\n\nPréparation :\n'+r.steps.map((s,i)=>(i+1)+'. '+s.action).join('\n')+'\n\n'+(r.sourceNote||'')+'\nSource d’inspiration : '+(r.source?.url||'recette originale')+'\n\n#LesRecettesDeFafa #CuisineMaison #RecetteFacile #FoodTok';downloadText('fafa-tiktok.txt',txt)};
+restore();restoreDraft();restoreKeys();aiKeyInfo();renderRecipes();updateSelects();show(activeView);openDB().then(x=>{db=x;restorePhotos()});
+})();
+</script>
+</body></html>
