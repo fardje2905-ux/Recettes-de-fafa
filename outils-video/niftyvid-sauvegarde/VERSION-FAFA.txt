@@ -1,0 +1,5 @@
+Version figee du code source NiftyVid
+Auteur : Igor Lima
+Source : https://github.com/IgorCSIS/nifty-vid.git
+Commit : 63ea9e446aa0cf0fea43fa90b4942afd3f4dcbdd
+Ne pas synchroniser ce dossier.

@@ -1,0 +1,5 @@
+Version evolutive NiftyVid
+Auteur : Igor Lima
+Source : https://github.com/IgorCSIS/nifty-vid.git
+Commit source : 63ea9e446aa0cf0fea43fa90b4942afd3f4dcbdd
+Date du commit source : 2026-09-29T00:29:58Z
