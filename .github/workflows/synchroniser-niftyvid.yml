@@ -1,0 +1,104 @@
+name: Sauvegarde et evolution NiftyVid Fafa
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/synchroniser-niftyvid.yml"
+  workflow_dispatch:
+  schedule:
+    # Chaque lundi a 06h23 UTC (07h23 en hiver, 08h23 en ete en France).
+    - cron: "23 6 * * 1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: niftyvid-fafa-sync
+  cancel-in-progress: false
+
+jobs:
+  sauvegarder-et-synchroniser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Recuperer le depot de Fafa
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Creer la copie figee et synchroniser la copie evolutive
+        shell: bash
+        env:
+          ORIGINAL: https://github.com/IgorCSIS/nifty-vid.git
+          VERSION_FIGEE: 63ea9e446aa0cf0fea43fa90b4942afd3f4dcbdd
+        run: |
+          set -euo pipefail
+          ROOT="$GITHUB_WORKSPACE/outils-video"
+          FIGEE="$ROOT/niftyvid-sauvegarde"
+          EVOL="$ROOT/niftyvid-evolution"
+          TEMP_SOURCE="$(mktemp -d)"
+          trap 'rm -rf "$TEMP_SOURCE"' EXIT
+          mkdir -p "$ROOT"
+          git clone --quiet --depth=1 "$ORIGINAL" "$TEMP_SOURCE/source"
+          VERSION_ACTUELLE="$(git -C "$TEMP_SOURCE/source" rev-parse HEAD)"
+          DATE_SOURCE="$(git -C "$TEMP_SOURCE/source" log -1 --format=%cI)"
+
+          # La sauvegarde ne peut etre creee que dans un dossier absent.
+          # Si elle existe, la verifier sans jamais la modifier.
+          if [ -e "$FIGEE" ]; then
+            test -f "$FIGEE/LICENSE"
+            test -f "$FIGEE/VERSION-FAFA.txt"
+            grep -Fqx "Commit : $VERSION_FIGEE" "$FIGEE/VERSION-FAFA.txt"
+            echo "Sauvegarde figee conservee sans changement."
+          else
+            git -C "$TEMP_SOURCE/source" fetch --quiet --depth=1 origin "$VERSION_FIGEE"
+            git -C "$TEMP_SOURCE/source" worktree add --quiet --detach "$TEMP_SOURCE/figee" "$VERSION_FIGEE"
+            test -f "$TEMP_SOURCE/figee/LICENSE"
+            mkdir -p "$FIGEE"
+            rsync -a --exclude='.git' "$TEMP_SOURCE/figee/" "$FIGEE/"
+            printf 'Version figee du code source NiftyVid\nAuteur : Igor Lima\nSource : %s\nCommit : %s\nNe pas synchroniser ce dossier.\n' "$ORIGINAL" "$VERSION_FIGEE" > "$FIGEE/VERSION-FAFA.txt"
+          fi
+
+          # Seul ce dossier dedie est remplace par la source officielle.
+          test -f "$TEMP_SOURCE/source/LICENSE"
+          mkdir -p "$EVOL"
+          rsync -a --delete --exclude='.git' "$TEMP_SOURCE/source/" "$EVOL/"
+          printf 'Version evolutive NiftyVid\nAuteur : Igor Lima\nSource : %s\nCommit source : %s\nDate du commit source : %s\n' "$ORIGINAL" "$VERSION_ACTUELLE" "$DATE_SOURCE" > "$EVOL/VERSION-FAFA.txt"
+
+          cat > "$ROOT/LISEZ-MOI.md" <<'EOF'
+          # NiftyVid pour Les recettes de Fafa
+
+          - **[Copie de secours figee](./niftyvid-sauvegarde/)** : code original conserve au commit `63ea9e446aa0cf0fea43fa90b4942afd3f4dcbdd`. Ce dossier n'est jamais synchronise.
+          - **[Copie evolutive](./niftyvid-evolution/)** : code officiel synchronise chaque lundi a 06h23 UTC (07h23 en hiver et 08h23 en ete en France), ou manuellement dans GitHub Actions avec le workflow « Sauvegarde et evolution NiftyVid Fafa ».
+
+          [Ouvrir l'application originale NiftyVid](https://igorcsis.github.io/nifty-vid/)
+
+          Source officielle : https://github.com/IgorCSIS/nifty-vid
+          Auteur : Igor Lima. Licence MIT conservee dans les deux copies.
+
+          ## Ce qui est sauvegarde
+          Ces dossiers conservent le code source du site et du Cloudflare Worker.
+          Ils ne sauvegardent ni le service de calcul IA, ni les images, ni les videos produites.
+          Telecharger et conserver les MP4 separement.
+
+          ## Utiliser une installation independante
+          Les dossiers GitHub ne sont pas des applications deja publiees.
+          Pour une installation independante, compiler le site Astro, le publier et deployer son propre Cloudflare Worker, puis configurer PUBLIC_WORKER_URL.
+          Les instructions du projet sont dans le README de chaque copie.
+          Le calcul IA depend d'un Space Hugging Face public, dont la disponibilite peut changer.
+
+          L'application de recettes existante et ses fichiers restent a la racine du depot.
+          Pour conserver des adaptations personnelles, les faire dans un autre dossier que niftyvid-evolution, qui est un miroir de la source.
+          EOF
+
+          git config user.name "Fafa NiftyVid Backup Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- outils-video
+          if git diff --cached --quiet; then
+            echo "Aucune modification a enregistrer."
+          else
+            git commit -m "Sauvegarder et synchroniser NiftyVid ($VERSION_ACTUELLE)"
+            git push origin HEAD:main
+          fi
