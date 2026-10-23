@@ -1,6 +1,6 @@
 # Les recettes de Fafa — plan de rangement
 
-**Compte Google dédié à créer** : lesrecettesdefafa@gmail.com (nom souhaité, disponibilité à vérifier). **Ne jamais stocker de mots de passe dans GitHub.**
+**Compte Google dédié à créer** : un nouveau compte exclusivement pour Fafa (nom souhaité, disponibilité à vérifier). **Ne jamais stocker de mots de passe dans GitHub.**
 
 ## Organisation du nouveau Google Drive
 
@@ -25,7 +25,7 @@ Pour chaque nouvelle recette, créer exactement les six sous-dossiers. Après pu
 
 **Règle de sauvegarde :** ne supprimer aucun original sur le Samsung avant d'avoir vérifié qu'il existe sur Drive et qu'il est lisible. Limiter la suppression aux doublons vérifiés et après accord.
 
-**Compte actuellement connecté dans ChatGPT Google Drive** : fardje2905@gmail.com. Pour garder le stockage dans le futur compte Fafa tout en permettant l'assistance depuis ce compte, créer le dossier racine sur le compte Fafa et le partager avec fardje2905@gmail.com comme éditeur. Cela ne donne pas accès au reste du nouveau Drive.
+**Compte actuellement connecté dans ChatGPT Google Drive** : le compte familial actuellement connecté à ChatGPT. Pour garder le stockage dans le futur compte Fafa tout en permettant l'assistance depuis ce compte, créer le dossier racine sur le compte Fafa et le partager avec le compte familial actuellement connecté à ChatGPT comme éditeur. Cela ne donne pas accès au reste du nouveau Drive.
 
 ## Les raccourcis à conserver sur Samsung
 
