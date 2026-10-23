@@ -2,11 +2,19 @@
 
 Ce dossier contient un vrai notebook Python pour lancer [Wan2GP](https://github.com/DeepBeepMeep/Wan2GP) et animer une photo en vidéo MP4 avec les GPU de Kaggle.
 
-## Ouvrir en une étape
+## Ouvrir depuis Kaggle sans téléchargement
 
-[**Ouvrir le notebook Fafa dans Kaggle**](https://www.kaggle.com/kernels/welcome?src=https://github.com/fardje2905-ux/Recettes-de-fafa/blob/main/outils-video/wan22-5b-kaggle/Fafa_Wan22_5B_Kaggle.ipynb)
+Le précédent lien direct `kaggle.com/kernels/welcome?src=...` peut renvoyer « Invalid field utm_source ». Utiliser l'import officiel :
 
-Ou télécharger directement [Fafa_Wan22_5B_Kaggle.ipynb](./Fafa_Wan22_5B_Kaggle.ipynb), puis l'importer dans Kaggle > Code.
+1. [Ouvrir Kaggle — nouveau notebook](https://www.kaggle.com/code/new)
+2. Dans le menu **File**, choisir **Import Notebook** (parfois **Open/Upload Notebook**) puis **GitHub**.
+3. Coller l'adresse du notebook FAFA :
+
+```text
+https://github.com/fardje2905-ux/Recettes-de-fafa/blob/main/outils-video/wan22-5b-kaggle/Fafa_Wan22_5B_Kaggle.ipynb
+```
+
+On peut aussi [télécharger le fichier .ipynb sur GitHub](./Fafa_Wan22_5B_Kaggle.ipynb) puis l'importer dans Kaggle via **Upload**.
 
 ## Sur smartphone Samsung
 
