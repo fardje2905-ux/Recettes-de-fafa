@@ -1,0 +1,95 @@
+name: Fafa - essai Wan 2.2 3 secondes
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/fafa-essai-wan-3s.yml"
+permissions:
+  contents: read
+jobs:
+  generation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preparations - image Fafa archivee
+        shell: bash
+        run: |
+          python -m pip install --quiet requests pillow
+          python - <<'PY'
+          import re,base64,io
+          from PIL import Image
+          from pathlib import Path
+          s=Path('fafa-v49.html').read_text(errors='ignore')
+          m=re.search(r'data:image/(?:png|jpeg|jpg|webp);base64,([A-Za-z0-9+/=]+)',s)
+          if not m: raise RuntimeError('Pas d image de depart dans les archives, generation arretee')
+          im=Image.open(io.BytesIO(base64.b64decode(m.group(1)))).convert('RGB')
+          im.thumbnail((512,896))
+          Path('output').mkdir(exist_ok=True)
+          im.save('output/image_source_fafa.jpg',quality=92)
+          print('Image existante de Fafa chargee',im.size)
+          PY
+      - name: Generation gratuite via Wan 2.2 public
+        shell: bash
+        run: |
+          python - <<'PY'
+          import requests,json,re,time,os
+          from pathlib import Path
+          base='https://cbensimon-wan2-2-fp8da-aoti-preview2.hf.space'
+          timeout=65
+          img='output/image_source_fafa.jpg'
+          prompt='Video verticale 9:16 photorealiste, exactement 3 secondes, la femme cuisine et remue les ingredients avec une cuillere en bois, gestes physiques realistes, bras nus, meme cuisine que image initiale. Aucun texte nouveau, aucun logo ajoute, pas de bras supplementaires, pas de changement de decor, vraie animation.'
+          print('Demande de 3 secondes au moteur Wan 2.2 gratuit; aucun fournisseur payant')
+          with open(img,'rb') as f:
+             r=requests.post(base+'/gradio_api/upload',files={'files':('fafa.jpg',f,'image/jpeg')},timeout=timeout)
+          r.raise_for_status()
+          paths=r.json()
+          if not paths or not isinstance(paths[0],str): raise RuntimeError('Echec import image')
+          neg='blurry, motion blur, static image, captions, text, extra hands, deformed fingers, face, timestamp, watermark'
+          data=[{'path':paths[0],'url':base+'/gradio_api/file='+paths[0],'orig_name':'fafa.jpg','meta':{'_type':'gradio.FileData'}},None,prompt,6,neg,3,1,1,42,True,6,'UniPCMultistep',3,16,False,True]
+          r=requests.post(base+'/gradio_api/call/generate_video',json={'data':data},timeout=timeout)
+          r.raise_for_status()
+          event=r.json().get('event_id')
+          if not event or not re.fullmatch('[A-Za-z0-9_-]+',event): raise RuntimeError('Pas de job accepte')
+          print('Job Wan demarre',event)
+          r=requests.get(base+'/gradio_api/call/generate_video/'+event,stream=True,timeout=(30,400))
+          r.raise_for_status()
+          eventname=None
+          candidate=None
+          for line in r.iter_lines(decode_unicode=True):
+             if not line: continue
+             if line.startswith('event:'): eventname=line.split(':',1)[1].strip()
+             elif line.startswith('data:'):
+                info=json.loads(line[5:].strip())
+                if eventname=='error': raise RuntimeError('Moteur Wan a refuse ou echoue: '+str(info)[:450])
+                if eventname=='complete':
+                   candidate=info
+                   break
+          if candidate is None: raise RuntimeError('Pas de resultat complet')
+          print('Reponse Wan recue',str(candidate)[:900])
+          def find_urls(obj):
+             if isinstance(obj,str):
+                if '.mp4' in obj or '/gradio_api/file=' in obj: yield obj
+             elif isinstance(obj,dict):
+                for v in obj.values(): yield from find_urls(v)
+             elif isinstance(obj,(list,tuple)):
+                for v in obj: yield from find_urls(v)
+          urls=list(find_urls(candidate))
+          if not urls: raise RuntimeError('Aucune video MP4 dans la reponse')
+          u=urls[0]
+          if u.startswith('/'): u=base+u
+          if not u.startswith('https://'): u=base+'/gradio_api/file='+u
+          if not u.startswith(base): raise RuntimeError('URL resultat non autorisee')
+          rr=requests.get(u,timeout=120)
+          rr.raise_for_status()
+          if len(rr.content)<10000: raise RuntimeError('Fichier genere trop petit')
+          Path('output/clip_wan_original_3s.mp4').write_bytes(rr.content)
+          print('MP4 Wan',len(rr.content),'octets')
+          PY
+      - name: Conserver les MP4 produits uniquement si generation reussie
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: FAFA_WAN_CLIP_3S_REEL
+          path: output/*.mp4
+          retention-days: 14
