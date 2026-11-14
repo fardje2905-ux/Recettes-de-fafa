@@ -1,0 +1,25 @@
+name: Fafa - recuperer MP4 Wan deja genere
+on:
+  push:
+    paths: [".github/workflows/fafa-recup-mp4.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  recuperation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Telecharger le vrai MP4 Wan existant sans regenerer
+        shell: bash
+        run: |
+          mkdir -p output
+          curl --fail --location --silent --show-error --connect-timeout 20 --max-time 95 "https://cbensimon-wan2-2-fp8da-aoti-preview2.hf.space/gradio_api/file=/tmp/gradio/a6d62c37460a24f8aaadddbbc6f83c11690943905b5e236e5cc0bc37762629bd/tmp0xivm_8v.mp4" -o output/FAFA_WAN_3S_VRAI.mp4
+          ls -lh output/FAFA_WAN_3S_VRAI.mp4
+          ffprobe -v error -show_entries format=duration,size -of default=noprint_wrappers=1 output/FAFA_WAN_3S_VRAI.mp4
+          test "$(stat -c%s output/FAFA_WAN_3S_VRAI.mp4)" -gt 10000
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FAFA_MP4_WAN_VERIFIE_3S
+          path: output/FAFA_WAN_3S_VRAI.mp4
+          retention-days: 14
