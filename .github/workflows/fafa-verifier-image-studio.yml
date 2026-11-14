@@ -1,0 +1,35 @@
+name: Fafa - verifier acces image du studio gratuit
+on:
+  push:
+    paths: [".github/workflows/fafa-verifier-image-studio.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  acces:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Verifier image generee sans refaire un calcul GPU
+        shell: bash
+        run: |
+          mkdir -p output
+          python - <<'PY'
+          import requests
+          from pathlib import Path
+          u='https://mila-studio-gratuit.lascidekatia.chatgpt.site/media/6fa23e61-b566-402f-9309-97d934a2c5f4'
+          try:
+            r=requests.get(u,timeout=30)
+            print('status',r.status_code,'type',r.headers.get('content-type'),'length',len(r.content),'effective_url',r.url)
+            if r.status_code!=200 or not (r.headers.get('content-type','').startswith('image/')):
+               print('NON ACCESSIBLE COMME IMAGE SANS AUTHENTIFICATION')
+            else:
+               Path('output/source_oignons_studio.webp').write_bytes(r.content)
+          except Exception as e: print('ERREUR',str(e)[:500])
+          PY
+      - uses: actions/upload-artifact@v4
+        if: hashFiles('output/source_oignons_studio.webp') != ''
+        with:
+          name: IMAGE_SOURCE_FAFA_1
+          path: output/source_oignons_studio.webp
+          retention-days: 2
