@@ -1,0 +1,89 @@
+name: FAFA - photorealisme FLUX vers video Wan 3 secondes
+on:
+  workflow_dispatch:
+  push:
+    paths: [".github/workflows/fafa-source-flux-video-wan.yml"]
+permissions:
+  contents: read
+jobs:
+  creation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Produire une vraie scene Fafa 3 secondes sans service payant
+        shell: bash
+        run: |
+          python -m pip install --quiet requests pillow
+          mkdir -p output
+          python - <<'PY'
+          import requests,json,re,io,time,sys
+          from pathlib import Path
+          from PIL import Image
+          S=requests.Session()
+          def call(base,endpoint,data,label):
+             print('Demarrage',label,flush=True)
+             r=S.post(base+'/gradio_api/call/'+endpoint,json={'data':data},timeout=65)
+             r.raise_for_status()
+             event=r.json().get('event_id')
+             if not event: raise RuntimeError(label+': evenement refusé: '+r.text[:250])
+             r=S.get(base+'/gradio_api/call/'+endpoint+'/'+event,stream=True,timeout=(30,340))
+             r.raise_for_status()
+             ev=''
+             for line in r.iter_lines(decode_unicode=True):
+                 if not line: continue
+                 if line.startswith('event:'): ev=line.split(':',1)[1].strip()
+                 elif line.startswith('data:'):
+                     d=json.loads(line.split(':',1)[1].strip())
+                     if ev=='error': raise RuntimeError(label+': erreur '+repr(d)[:300])
+                     if ev=='complete': return d
+             raise RuntimeError(label+': jamais complet')
+          def url_from_result(x,base):
+             def walk(node):
+                if isinstance(node,dict):
+                   if isinstance(node.get('url'),str) and ('/file=' in node['url'] or 'image.' in node['url']):return node['url']
+                   for v in node.values():
+                     got=walk(v)
+                     if got: return got
+                elif isinstance(node,list):
+                   for item in node:
+                     got=walk(item)
+                     if got:return got
+                return None
+             u=walk(x)
+             if not u: raise RuntimeError('Aucun URL fichier dans '+repr(x)[:350])
+             if u.startswith('/'):u=base+u
+             if not u.startswith(base):raise RuntimeError('Destination de fichier inconnue')
+             return u
+          flux='https://black-forest-labs-flux-1-schnell.hf.space'
+          scene='Photorealistic film still, vertical 9:16 portrait, kitchen cooking tutorial, Les recettes de Fafa, ONE real adult female cook, face completely out of view, natural realistic bare arms and forearms, absolutely NO SLEEVES, always plain dark burgundy sleeveless top and short terracotta apron tied ONLY at waist without bib. Bright consistent French modern kitchen: LIGHT OAK countertop, PALE WHITE MARBLE backsplash, STAINLESS STEEL gas hob fixed in SAME LOCATION, deep matte BLACK wok on burner. Close up of the cook holding a small white ceramic bowl filled with crisp diced RED ONION over the oil-coated empty black wok, bowl tilted slightly ready to pour, onion pieces all SHARP and STILL inside bowl. Only two hands, exact realistic human anatomy. No parsley or decorative plants, no cutlery on counter, no captions, no letters, no text, no brand logo, no clock, no timer, no watermark. Cinematic professional food photography, super sharp onion pieces, bright natural daylight from left.'
+          raw=call(flux,'infer',[scene,42,False,576,1024,4],'FLUX image oignons')
+          print('Resultat FLUX',repr(raw)[:400],flush=True)
+          data=S.get(url_from_result(raw,flux),timeout=80)
+          data.raise_for_status()
+          im=Image.open(io.BytesIO(data.content)).convert('RGB')
+          if min(im.size)<256:raise RuntimeError('Image trop petite')
+          im.save('output/FAFA_SOURCE_01_OIGNONS.jpg',quality=92)
+          print('Image source',im.size,flush=True)
+          wan='https://cbensimon-wan2-2-fp8da-aoti-preview2.hf.space'
+          with open('output/FAFA_SOURCE_01_OIGNONS.jpg','rb') as f:
+              r=S.post(wan+'/gradio_api/upload',files={'files':('oignons_fafa.jpg',f,'image/jpeg')},timeout=75)
+          r.raise_for_status()
+          p=r.json()[0]
+          motion='Three-second real physical cooking action. In the SAME exact photo kitchen and SAME sleeveless burgundy top and terracotta apron with BARE FOREARMS, the adult cook tilts the existing white bowl and pours the sharp diced red onions naturally into the oil of the SAME black wok, each onion falls with gravity, bowl empties steadily; stable camera, only two hands, no extra objects. No text, no floating items, crisp motion, no motion blur.'
+          neg='static image, motion blur, blur, deformed hands, third hand, extra limbs, changes of clothing, long sleeves, letters, text, subtitle, timer, floating objects, new cookware'
+          data=[{'path':p,'url':wan+'/gradio_api/file='+p,'orig_name':'oignons_fafa.jpg','meta':{'_type':'gradio.FileData'}},None,motion,6,neg,3,1,1,42,True,6,'UniPCMultistep',3,16,False,True]
+          clip=call(wan,'generate_video',data,'Wan animation oignons 3 s')
+          print('Reponse WAN',repr(clip)[:370],flush=True)
+          u=url_from_result(clip,wan)
+          content=S.get(u,timeout=120).content
+          if len(content)<12000 or b'ftyp' not in content[:60]:raise RuntimeError('Resultat MP4 invalide')
+          Path('output/FAFA_CLIP_01_OIGNONS_WAN.mp4').write_bytes(content)
+          print('OK vrai MP4 WAN',len(content),'octets',flush=True)
+          PY
+      - name: Conserver resultat genere
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: FAFA_OIGNONS_FLUX_WAN_3S
+          path: output/*
+          retention-days: 14
